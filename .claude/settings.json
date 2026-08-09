@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "Bash(node interact.mjs)",
+      "Bash(pkill -f \"serve@14\")",
+      "Bash(pkill -f \"serve out\")"
+    ]
+  }
+}

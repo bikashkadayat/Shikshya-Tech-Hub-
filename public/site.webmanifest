@@ -1,0 +1,13 @@
+{
+  "name": "Shikshya Tech Hub",
+  "short_name": "Shikshya",
+  "description": "Practical technology education for students, schools and colleges.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F3F7FD",
+  "theme_color": "#0A1A3F",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
