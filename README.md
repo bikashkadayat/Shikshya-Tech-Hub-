@@ -1,0 +1,423 @@
+# Shikshya Tech Hub — Website
+
+The production frontend for **Shikshya Tech Hub**, a practical technology education platform for
+students, schools and colleges.
+
+Built as a **fully static site** — no backend, no database, no authentication, no API. Everything
+that looks dynamic (course search, category filters, the FAQ accordion, the mobile menu, contact
+form validation) runs in the browser from local data.
+
+- **Live pages:** Home, Courses, Course Detail, Workshops, Tutors, Schools & Institutions, Contact
+- **Deploys free** to Cloudflare Pages from GitHub
+
+---
+
+## Table of contents
+
+- [Tech stack](#tech-stack)
+- [Getting started](#getting-started)
+- [Commands](#commands)
+- [Project structure](#project-structure)
+- [Design system](#design-system)
+- [Editing content](#editing-content)
+  - [Courses](#courses)
+  - [Workshops](#workshops)
+  - [Tutors](#tutors)
+  - [Contact details, socials and navigation](#contact-details-socials-and-navigation)
+  - [Testimonials](#testimonials)
+  - [Using your real logo file](#using-your-real-logo-file)
+- [Connecting the contact form](#connecting-the-contact-form)
+- [Deploying to Cloudflare Pages](#deploying-to-cloudflare-pages)
+  - [1. Create the Pages project](#1-create-the-pages-project)
+  - [2. Create a Cloudflare API token](#2-create-a-cloudflare-api-token)
+  - [3. Add the GitHub secrets](#3-add-the-github-secrets)
+  - [4. Push](#4-push)
+  - [Custom domain](#custom-domain)
+- [SEO checklist](#seo-checklist)
+- [Accessibility](#accessibility)
+- [Content rules](#content-rules)
+
+---
+
+## Tech stack
+
+| Layer      | Choice                                                    |
+| ---------- | --------------------------------------------------------- |
+| Framework  | Next.js 15 (App Router), `output: 'export'` — static HTML |
+| Language   | TypeScript (strict)                                       |
+| Styling    | Tailwind CSS v4 (CSS-first `@theme` tokens)               |
+| UI         | React 19                                                   |
+| Icons      | `lucide-react` (brand glyphs hand-drawn in `SocialIcon`)   |
+| Fonts      | Poppins (display), Inter (body), JetBrains Mono (labels)   |
+| Hosting    | Cloudflare Pages (static), deployed by GitHub Actions      |
+
+There is deliberately **no** runtime dependency on Node, so the output is a plain folder of HTML,
+CSS, JS and images that any static host can serve.
+
+---
+
+## Getting started
+
+Requires **Node.js 20.9+** (Node 20 LTS or newer).
+
+```bash
+git clone <your-repo-url>
+cd "SHIKSHYA TECH HUB"
+npm install
+npm run dev
+```
+
+Open <http://localhost:3000>.
+
+---
+
+## Commands
+
+| Command             | What it does                                                        |
+| ------------------- | ------------------------------------------------------------------- |
+| `npm run dev`       | Start the dev server with hot reload                                 |
+| `npm run build`     | Production build → static site in `./out`                            |
+| `npm start`         | Serve the built `./out` folder locally (preview the real output)     |
+| `npm run preview`   | `build` then `start`                                                 |
+| `npm run lint`      | ESLint (Next.js core-web-vitals + TypeScript rules)                  |
+| `npm run typecheck` | `tsc --noEmit`                                                       |
+
+> `npm run build` writes to `out/`. That folder is what gets uploaded to Cloudflare; it is
+> git-ignored.
+
+---
+
+## Project structure
+
+```
+.
+├── .github/workflows/deploy.yml   # Cloudflare Pages deployment
+├── public/                        # Static assets served from /
+│   ├── favicon.svg, favicon.ico, apple-touch-icon.png
+│   ├── icon-192.png, icon-512.png, site.webmanifest
+│   ├── og.png                     # OpenGraph / Twitter share image
+│   └── _headers                   # Cloudflare cache + security headers
+├── src/
+│   ├── app/                       # Routes (App Router)
+│   │   ├── layout.tsx             # Fonts, global metadata, navbar + footer
+│   │   ├── page.tsx               # Home
+│   │   ├── courses/page.tsx       # Course listing (search + filters)
+│   │   ├── courses/[slug]/page.tsx# Course detail (one page per course)
+│   │   ├── workshops/page.tsx
+│   │   ├── tutors/page.tsx
+│   │   ├── schools/page.tsx
+│   │   ├── contact/page.tsx
+│   │   ├── not-found.tsx          # 404
+│   │   ├── robots.ts              # → /robots.txt
+│   │   ├── sitemap.ts             # → /sitemap.xml
+│   │   └── globals.css            # Design tokens + base styles
+│   │
+│   ├── components/
+│   │   ├── layout/                # Navbar, MobileMenu, Footer
+│   │   ├── brand/                 # Logo, SocialIcon
+│   │   ├── ui/                    # Button, Badge, Chip, Eyebrow, SectionHeading,
+│   │   │                          # IconTile, Breadcrumb, Accordion, Reveal,
+│   │   │                          # Container, Section, PageHero
+│   │   ├── courses/               # CourseCard, CourseGrid, CourseFilter,
+│   │   │                          # CourseExplorer, CourseDetail
+│   │   ├── workshops/             # WorkshopCard, CustomWorkshopCard
+│   │   ├── tutors/                # TutorCard, TutorProfile
+│   │   ├── sections/              # Hero, Stats, About, CoursesPreview, WhyUs,
+│   │   │                          # HowItWorks, TutorsPreview, SchoolsCTA,
+│   │   │                          # Testimonials, FAQ, ContactSection
+│   │   └── forms/                 # ContactForm
+│   │
+│   ├── data/                      # ← ALL EDITABLE CONTENT LIVES HERE
+│   │   ├── courses.ts             # The nine courses + detail content
+│   │   ├── workshops.ts           # Workshop topics
+│   │   ├── tutors.ts              # Tutor profiles
+│   │   ├── content.ts             # About, Why Us, How It Works, schools, FAQ
+│   │   └── site.ts                # Site config, nav, contact details, footer
+│   │
+│   └── lib/                       # icons registry, `cn` helper
+├── next.config.mjs                # static export config
+├── wrangler.toml                  # Cloudflare Pages project config
+└── tsconfig.json
+```
+
+---
+
+## Design system
+
+All brand tokens live in one place: [`src/app/globals.css`](src/app/globals.css), inside the
+Tailwind v4 `@theme` block. Change a value there and it updates everywhere.
+
+**Colours**
+
+| Token      | Hex       | Used for                  |     | Token      | Hex       | Used for              |
+| ---------- | --------- | ------------------------- | --- | ---------- | --------- | --------------------- |
+| Ink        | `#0B1533` | primary text              |     | Green      | `#10C98B` | CTA accent            |
+| Navy       | `#0A1A3F` | dark sections             |     | Green Dark | `#0BA976` | CTA gradient end      |
+| Navy2      | `#081231` | navy gradient end         |     | Yellow     | `#FFCE3A` | badges / highlights   |
+| Electric   | `#1E6BFF` | primary blue              |     | Mist       | `#F3F7FD` | page background       |
+| Electric2  | `#43A0FF` | gradient top              |     | Mist2      | `#EAF1FB` | chips / tints         |
+| Royal      | `#0052D4` | deep brand blue           |     | Line       | `#E4ECF7` | hairline borders      |
+| Purple     | `#7C4DFF` | secondary                 |     | Muted      | `#5D6E8C` | secondary text        |
+| Cyan       | `#25C2E6` | secondary                 |     | OnDark     | `#E7EEFB` | text on navy          |
+|            |           |                           |     | OnMute     | `#96A8CE` | secondary on navy     |
+
+Used as normal Tailwind utilities: `text-ink`, `bg-mist`, `border-line`, `text-onmute`, …
+
+**Gradients** are CSS classes so they stay identical everywhere:
+`g-blue`, `g-brand`, `g-cyan`, `g-green`, `g-navy`, `g-mist`, plus `g-text` / `g-text-cyan` for
+gradient headlines and `g-glow` / `g-glow-purple` for ambient blobs.
+
+**Type scale** — fluid classes that clamp between mobile and the 1440 desktop reference:
+`t-hero` (34→56px), `t-h2` (26→40px), `t-h3`, `t-card-title` (18→22px), `t-body`, `t-small`,
+`t-mono` (12px uppercase, tracked).
+
+**The signature motif.** The circuit-style underline in the logo ("TECH HUB") is reused as the
+eyebrow above every section heading: a short rule + a node dot + an uppercase mono label. It is
+implemented once in [`src/components/ui/Eyebrow.tsx`](src/components/ui/Eyebrow.tsx) — use
+`<SectionHeading eyebrow="…" />` and you get it for free.
+
+---
+
+## Editing content
+
+Almost nothing requires touching a component. Content lives in `src/data/`.
+
+### Courses
+
+Edit [`src/data/courses.ts`](src/data/courses.ts). Adding an object to the `courses` array is all
+that is needed — the listing page, the search index, the sitemap, the footer links and a full
+detail page at `/courses/<slug>/` are all generated from it.
+
+```ts
+{
+  slug: 'game-development',          // becomes /courses/game-development/
+  title: 'Game Development',
+  category: 'Development',           // must be one of the CourseCategory values
+  level: 'Beginner–Intermediate',    // Beginner | Beginner–Intermediate | Intermediate | All levels
+  icon: 'code',                      // a key from src/lib/icons.ts
+  summary: 'One line, shown on the card.',
+  duration: '6 weeks',               // null → renders an "editable placeholder" badge
+  projects: 4,                       // null → renders an "editable placeholder" badge
+  certificate: 'On completion',
+  overview: ['Paragraph one.', 'Paragraph two.'],
+  learn: ['Bullet', 'Bullet'],       // two-column checklist
+  projectList: [{ title: '…', description: '…' }],
+  tools: ['Unity', 'C#'],            // rendered as chips
+  outcomes: ['…'],
+  faqs: [{ question: '…', answer: '…' }],
+}
+```
+
+Fields set to `null` deliberately render as a labelled **editable placeholder** instead of a made-up
+value. Fill them in and the placeholder disappears.
+
+Category → accent gradient is mapped in `categoryGradient` in the same file. Filter chips come from
+`courseFilters`.
+
+### Workshops
+
+Edit [`src/data/workshops.ts`](src/data/workshops.ts).
+
+```ts
+{
+  slug: 'ai-awareness',
+  title: 'AI Awareness',
+  icon: 'brain',
+  gradient: 'g-blue',                // g-blue | g-brand | g-cyan | g-green
+  duration: null,                    // ← set e.g. '2 hours' to replace the placeholder
+  description: '…',
+  highlights: ['…', '…', '…'],
+}
+```
+
+Durations ship as `null` on purpose — set them once your programme lengths are fixed. The
+"Need a Custom Workshop?" tile is rendered separately as the eighth card and needs no data.
+
+### Tutors
+
+Edit [`src/data/tutors.ts`](src/data/tutors.ts).
+
+**Bikash Kadayat** is the only real profile, and it contains only the information that was
+supplied. Every other entry has `isPlaceholder: true` and renders as a clearly-marked editable card.
+
+To publish a new tutor, replace a placeholder's fields and set `isPlaceholder: false`. Set
+`linkedin` / `github` to real URLs and the dashed placeholder buttons become live links.
+
+> Do not add years of experience, employers, awards, certifications or student numbers unless you
+> can verify them — see [Content rules](#content-rules).
+
+### Contact details, socials and navigation
+
+Edit [`src/data/site.ts`](src/data/site.ts).
+
+- `siteConfig.url` — **change this to your real domain** before deploying (it drives canonical URLs,
+  OpenGraph tags and the sitemap).
+- `contactDetails` — email, phone, address and office hours. Each ships as `value: null`, which
+  renders an "Add your …" placeholder. Set `value` and `href` to publish it:
+  ```ts
+  { icon: 'globe', label: 'Email', value: 'hello@example.com',
+    hint: 'Add your email address', href: 'mailto:hello@example.com' }
+  ```
+- `socialLinks` — set `href` to a real URL to activate each button.
+- `navItems` — the navbar and mobile menu.
+- `footerColumns` — the four footer link columns.
+- `stats` — the strip under the hero.
+
+### Testimonials
+
+[`src/data/content.ts`](src/data/content.ts) → `testimonials`. They ship empty and render as
+labelled skeleton placeholders. Fill in `quote`, `author` and `role` and the card switches to the
+published layout automatically. **Never invent one.**
+
+The same file holds the About pillars, Why Us features, How It Works steps, school benefits, the
+partnership process and the home page FAQ.
+
+### Using your real logo file
+
+The site currently renders a CSS/SVG reconstruction of the wordmark. To use your original artwork:
+
+1. Add both versions to `public/`:
+   - `public/logo.png` — transparent background (for light navbars)
+   - `public/logo-white.png` — white knockout (for the navy footer)
+2. In [`src/components/brand/Logo.tsx`](src/components/brand/Logo.tsx), change:
+   ```ts
+   const LOGO_MODE: 'wordmark' | 'image' = 'image';
+   ```
+
+Every navbar, mobile menu and footer picks it up automatically.
+
+---
+
+## Connecting the contact form
+
+The form is **frontend-only**. It validates properly, shows loading, success and error states — and
+it never claims a message was sent when it was not. With no endpoint configured, a valid submission
+says exactly that.
+
+To make it deliver for real, set one constant in
+[`src/components/forms/ContactForm.tsx`](src/components/forms/ContactForm.tsx):
+
+```ts
+const FORM_ENDPOINT: string | null = 'https://formspree.io/f/xxxxxxx';
+```
+
+Any service that accepts a JSON `POST` works — Formspree, Web3Forms, Getform, or your own
+Cloudflare Worker. The payload is:
+
+```json
+{ "name": "", "email": "", "phone": "", "organization": "", "course": "", "message": "" }
+```
+
+Nothing else needs changing: validation, the loading spinner, the success panel and the error panel
+are already wired.
+
+---
+
+## Deploying to Cloudflare Pages
+
+The build produces a static `out/` folder, so hosting is free and requires no server.
+
+### 1. Create the Pages project
+
+1. Push this repository to GitHub.
+2. In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to Git** (or
+   **Direct Upload** — the Action below uploads for you either way).
+3. Name the project **`shikshya-tech-hub`**.
+
+> If you use a different project name, update it in **both** `wrangler.toml` and
+> `.github/workflows/deploy.yml`.
+
+If you let Cloudflare build it directly instead of using the Action, use:
+
+- **Build command:** `npm run build`
+- **Build output directory:** `out`
+- **Node version:** `20`
+
+### 2. Create a Cloudflare API token
+
+**My Profile → API Tokens → Create Token → Custom token**
+
+- Permissions: `Account` → `Cloudflare Pages` → **Edit**
+- Account Resources: include your account
+
+Copy the token — it is shown only once. Your **Account ID** is on the right-hand side of the
+Cloudflare dashboard overview page.
+
+### 3. Add the GitHub secrets
+
+**Repository → Settings → Secrets and variables → Actions → New repository secret**
+
+| Secret name             | Value                          |
+| ----------------------- | ------------------------------ |
+| `CLOUDFLARE_API_TOKEN`  | the token from step 2          |
+| `CLOUDFLARE_ACCOUNT_ID` | your Cloudflare account ID     |
+
+Secrets are never committed to the repository — the workflow reads them from GitHub at run time.
+
+### 4. Push
+
+```bash
+git add .
+git commit -m "Shikshya Tech Hub website"
+git push origin main
+```
+
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) then runs on every push to `main`:
+install → typecheck → lint → build → deploy. You can also trigger it manually from the **Actions**
+tab (`workflow_dispatch`).
+
+### Custom domain
+
+1. **Pages project → Custom domains → Set up a custom domain.**
+2. Update `siteConfig.url` in `src/data/site.ts` to the new domain and push, so canonical URLs,
+   OpenGraph tags and the sitemap point at the right place.
+
+---
+
+## SEO checklist
+
+Already implemented:
+
+- Unique `<title>` and description on every page, with a `%s | Shikshya Tech Hub` template
+- OpenGraph + Twitter card metadata, and a branded `og.png` share image
+- Canonical URLs per page
+- `robots.txt` and `sitemap.xml` generated at build time (course pages included)
+- `site.webmanifest`, favicon (SVG + ICO) and an Apple touch icon
+- Semantic HTML with a single `<h1>` per page and an ordered heading hierarchy
+- Descriptive `alt` text; decorative visuals marked `aria-hidden`
+
+**Before going live:** set `siteConfig.url` to your real domain.
+
+---
+
+## Accessibility
+
+- Skip-to-content link, semantic landmarks (`header` / `nav` / `main` / `footer`)
+- Visible focus ring on every interactive element
+- Mobile menu is a proper dialog: focus moves in on open, is trapped while open, returns to the
+  trigger on close, Escape closes it, and background scroll is locked
+- Accordion uses real buttons with `aria-expanded` / `aria-controls`
+- Every form field has a real `<label>`; errors use `aria-invalid` + `aria-describedby`, and submit
+  moves focus to the first invalid field
+- Filter results announce via `aria-live`
+- `prefers-reduced-motion` disables all animation and scroll-reveal
+- Scroll reveals fall back to fully visible without JavaScript
+
+---
+
+## Content rules
+
+These are baked into the data files and must be preserved when editing.
+
+**Never invent:** student numbers, testimonials, partnerships, awards, certifications, client logos,
+company achievements, statistics, or tutor credentials.
+
+- The only real tutor profile is **Bikash Kadayat**; every other profile is an editable placeholder.
+- The stats strip carries no invented metrics — "9+" is simply the number of courses actually listed
+  on this site, and the other three are statements about approach, not scale.
+- Testimonials are empty skeleton placeholders until real ones are supplied.
+- Contact details are placeholders until real values are set.
+
+Where information is missing, the UI shows a deliberate, labelled **editable placeholder** rather
+than a plausible-sounding guess.
+# Shikshya-Tech-Hub-
