@@ -45,6 +45,7 @@ export const navItems: NavItem[] = [
   { label: 'Courses', href: '/courses', match: '/courses' },
   { label: 'Workshops', href: '/workshops', match: '/workshops' },
   { label: 'Tutors', href: '/tutors', match: '/tutors' },
+  { label: 'Our Team', href: '/our-team', match: '/our-team' },
   { label: 'Why Us', href: '/#why-us' },
   { label: 'Contact', href: '/contact', match: '/contact' },
 ];
@@ -122,6 +123,7 @@ export const footerColumns: { title: string; links: { label: string; href: strin
     title: 'Connect',
     links: [
       { label: 'Our Tutors', href: '/tutors' },
+      { label: 'Our Team', href: '/our-team' },
       { label: 'Contact Us', href: '/contact' },
     ],
   },

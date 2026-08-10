@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/courses', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/workshops', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/tutors', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/our-team', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/schools', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/contact', priority: 0.6, changeFrequency: 'yearly' },
   ];
