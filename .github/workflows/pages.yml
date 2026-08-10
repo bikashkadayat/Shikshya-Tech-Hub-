@@ -6,11 +6,13 @@ on:
   # Lets you re-deploy from the Actions tab without pushing a commit.
   workflow_dispatch:
 
-# One deployment at a time. In-progress runs are allowed to finish so a
-# half-published site is never left live.
+# One Pages deployment at a time. Two pushes in quick succession previously
+# collided: the second run's deploy job was rejected with "in progress
+# deployment" while the first still held the Pages slot. Cancelling the
+# superseded run releases that slot immediately.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: github-pages
+  cancel-in-progress: true
 
 permissions:
   contents: read
