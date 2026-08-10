@@ -20,7 +20,8 @@
       "Bash(cp -p ~/Downloads/1.jpeg public/images/programs/learning-program-group-01.jpeg)",
       "Bash(cp -p ~/Downloads/2.jpeg public/images/programs/community-program-01.jpeg)",
       "Bash(cp -p ~/Downloads/3.jpeg public/images/programs/learning-program-group-02.jpeg)",
-      "Bash(cp -p ~/Downloads/CEO.jpeg public/images/leadership/apil-kunwar-ceo.jpeg)"
+      "Bash(cp -p ~/Downloads/CEO.jpeg public/images/leadership/apil-kunwar-ceo.jpeg)",
+      "Bash(gh auth *)"
     ]
   }
 }
