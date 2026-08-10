@@ -1,27 +1,36 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
+import { AlertCircle, Loader2, Send } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { contactDetails, formSubmitAction } from '@/data/contact';
 import { getCourseTitles } from '@/data/courses';
 import { cn } from '@/lib/utils';
 
 /* -------------------------------------------------------------------------- */
-/* Connecting this form to a real service                                      */
+/* How this form delivers                                                      */
 /* -------------------------------------------------------------------------- */
 /**
- * This site is frontend-only, so nothing is delivered anywhere by default and
- * the form never claims otherwise.
+ * This site is frontend-only — no server, no API route, no database — so the
+ * inquiry is posted straight to FormSubmit, which emails it to
+ * `contactDetails.email`. There are no keys or secrets involved: the endpoint
+ * is just the public address, and FormSubmit's own captcha handles spam.
  *
- * To make it actually send, set FORM_ENDPOINT to a URL that accepts a JSON
- * POST — for example a Formspree / Web3Forms / Getform endpoint, or your own
- * Cloudflare Worker. Everything else already works:
+ * It is a plain HTML POST rather than a fetch() call on purpose. `_captcha`
+ * needs a real page to render its challenge, so an AJAX submission would break
+ * spam protection. The browser therefore navigates to FormSubmit's confirmation
+ * page, which is also why this component never claims an inquiry was delivered
+ * — only FormSubmit can say that.
  *
- *   const FORM_ENDPOINT: string | null = 'https://formspree.io/f/xxxxxxx';
+ * FIRST-RUN ACTIVATION: the first submission from the live site triggers an
+ * activation email to `contactDetails.email`. Until someone opens it and
+ * confirms, nothing is forwarded.
  *
- * The payload shape is `FormValues` below.
+ * OPTIONAL — return visitors to our own thank-you page instead of FormSubmit's:
+ * once the real production domain is confirmed, add a `/thank-you` route and a
+ * hidden field `<input type="hidden" name="_next" value="https://<domain>/thank-you/" />`.
+ * It must be an absolute URL on the live domain; localhost will not work.
  */
-const FORM_ENDPOINT: string | null = null;
 
 type FormValues = {
   name: string;
@@ -34,6 +43,21 @@ type FormValues = {
 
 type FieldName = keyof FormValues;
 
+/**
+ * The `name` attributes that travel to the inbox. FormSubmit uses them as the
+ * labels in the notification email, so they read as words, not code.
+ */
+const FIELD_NAMES: Record<FieldName, string> = {
+  name: 'Full Name',
+  email: 'Email',
+  phone: 'Phone',
+  organization: 'School or Organization',
+  course: 'Interested Course',
+  message: 'Message',
+};
+
+const MESSAGE_MAX_LENGTH = 2000;
+
 const emptyValues: FormValues = {
   name: '',
   email: '',
@@ -43,10 +67,10 @@ const emptyValues: FormValues = {
   message: '',
 };
 
-type Status = 'idle' | 'submitting' | 'validated' | 'sent' | 'error';
+type Status = 'idle' | 'submitting' | 'offline';
 
 /* -------------------------------------------------------------------------- */
-/* Validation — client-side only                                               */
+/* Validation — client-side, on top of the browser's own                       */
 /* -------------------------------------------------------------------------- */
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -93,6 +117,7 @@ export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const courseTitles = getCourseTitles();
+  const isSubmitting = status === 'submitting';
 
   function update(field: FieldName, value: string) {
     setValues((previous) => ({ ...previous, [field]: value }));
@@ -110,8 +135,17 @@ export function ContactForm() {
     setErrors((previous) => ({ ...previous, [field]: next[field] }));
   }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  /**
+   * Runs before the browser posts to FormSubmit. It only ever *stops* the
+   * submission — it never fakes one. If everything is valid the default POST
+   * goes ahead and the browser lands on FormSubmit's confirmation page.
+   */
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    // Already on its way — ignore a second click or a double Enter.
+    if (isSubmitting) {
+      event.preventDefault();
+      return;
+    }
 
     const nextErrors = validate(values);
     setErrors(nextErrors);
@@ -126,117 +160,77 @@ export function ContactForm() {
 
     const firstError = (Object.keys(nextErrors) as FieldName[])[0];
     if (firstError) {
+      event.preventDefault();
       setStatus('idle');
-      formRef.current?.querySelector<HTMLElement>(`[name="${firstError}"]`)?.focus();
+      formRef.current
+        ?.querySelector<HTMLElement>(`[name="${FIELD_NAMES[firstError]}"]`)
+        ?.focus();
+      return;
+    }
+
+    // No connection means the POST cannot leave the device — say so plainly
+    // instead of navigating into a browser error page.
+    if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+      event.preventDefault();
+      setStatus('offline');
       return;
     }
 
     setStatus('submitting');
-
-    // No endpoint configured — validate, then say plainly that nothing was sent.
-    if (!FORM_ENDPOINT) {
-      // Small deliberate pause so the loading state is perceivable.
-      await new Promise((resolve) => setTimeout(resolve, 550));
-      setStatus('validated');
-      return;
-    }
-
-    try {
-      const response = await fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(values),
-      });
-
-      if (!response.ok) throw new Error(`Request failed with status ${response.status}`);
-
-      setStatus('sent');
-      setValues(emptyValues);
-      setTouched({});
-    } catch {
-      setStatus('error');
-    }
   }
-
-  /* ----------------------------- Result states ---------------------------- */
-
-  if (status === 'validated' || status === 'sent') {
-    return (
-      <div
-        role="status"
-        className="flex flex-col items-center rounded-card border border-line bg-white p-8 text-center shadow-soft sm:p-10"
-      >
-        <span className="flex size-14 items-center justify-center rounded-full bg-green/14 text-green-dark">
-          <CheckCircle2 className="size-7" aria-hidden="true" />
-        </span>
-
-        {status === 'sent' ? (
-          <>
-            <h3 className="t-h3 mt-5 text-ink">Message sent</h3>
-            <p className="t-body mt-3 max-w-sm text-muted">
-              Thank you — we have received your enquiry and will get back to you.
-            </p>
-          </>
-        ) : (
-          <>
-            <h3 className="t-h3 mt-5 text-ink">Your details check out</h3>
-            <p className="t-body mt-3 max-w-md text-muted">
-              Everything you entered is valid.{' '}
-              <span className="font-semibold text-ink">
-                Nothing has been sent yet — this form is not connected to a delivery service.
-              </span>{' '}
-              Connect one by setting <code className="font-mono text-[13px] text-electric">FORM_ENDPOINT</code>{' '}
-              in <code className="font-mono text-[13px] text-electric">src/components/forms/ContactForm.tsx</code>.
-            </p>
-          </>
-        )}
-
-        <Button
-          kind="ghost"
-          size="sm"
-          className="mt-6"
-          onClick={() => {
-            setStatus('idle');
-            if (status === 'sent') setValues(emptyValues);
-          }}
-        >
-          {status === 'sent' ? 'Send another message' : 'Back to the form'}
-        </Button>
-      </div>
-    );
-  }
-
-  /* -------------------------------- Form ---------------------------------- */
-
-  const isSubmitting = status === 'submitting';
 
   return (
     <form
       ref={formRef}
+      action={formSubmitAction}
+      method="POST"
       onSubmit={handleSubmit}
-      noValidate
       className="rounded-card border border-line bg-white p-6 shadow-soft sm:p-8"
     >
+      {/* FormSubmit configuration — no secrets, all public settings. */}
+      <input type="hidden" name="_subject" value="New Shikshya Tech Hub Website Inquiry" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="true" />
+      {/* Honeypot: bots fill it, people never see it. */}
+      <input
+        type="text"
+        name="_honey"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
+
       <h3 className="t-h3 text-ink">Send an Inquiry</h3>
       <p className="t-small mt-2 text-muted">
         Tell us who you are and what you are looking for. Fields marked
         <span className="text-electric"> *</span> are required.
       </p>
 
-      {status === 'error' ? (
+      {status === 'offline' ? (
         <p
           role="alert"
           className="mt-5 flex items-start gap-2.5 rounded-tile border border-[#F5C2C0] bg-[#FDF0EF] px-4 py-3 text-sm text-[#9B2C24]"
         >
           <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-          Something went wrong while sending your message. Please try again in a moment.
+          <span>
+            We could not send your inquiry. Please try again or email us directly at{' '}
+            <a
+              href={`mailto:${contactDetails.email}`}
+              aria-label="Email Shikshya Tech Hub"
+              className="font-semibold underline underline-offset-2 hover:no-underline"
+            >
+              {contactDetails.email}
+            </a>
+            .
+          </span>
         </p>
       ) : null}
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <Field
           label="Full Name"
-          name="name"
+          field="name"
           required
           value={values.name}
           error={touched.name ? errors.name : undefined}
@@ -248,7 +242,7 @@ export function ContactForm() {
 
         <Field
           label="Email"
-          name="email"
+          field="email"
           type="email"
           required
           value={values.email}
@@ -261,7 +255,7 @@ export function ContactForm() {
 
         <Field
           label="Phone"
-          name="phone"
+          field="phone"
           type="tel"
           value={values.phone}
           error={touched.phone ? errors.phone : undefined}
@@ -273,7 +267,7 @@ export function ContactForm() {
 
         <Field
           label="School / Organization"
-          name="organization"
+          field="organization"
           value={values.organization}
           error={touched.organization ? errors.organization : undefined}
           onChange={update}
@@ -289,12 +283,12 @@ export function ContactForm() {
           </label>
           <select
             id="contact-course"
-            name="course"
+            name={FIELD_NAMES.course}
             value={values.course}
             onChange={(event) => update('course', event.target.value)}
             className={cn(
-              'h-12 w-full rounded-xl border border-line bg-mist px-4 text-[15px] text-ink',
-              'focus:border-electric focus:bg-white focus:outline-none',
+              'h-12 w-full rounded-xl border border-line bg-mist px-4 text-[16px] text-ink sm:text-[15px]',
+              'focus:border-electric focus:bg-white',
               'transition-colors',
             )}
           >
@@ -316,8 +310,10 @@ export function ContactForm() {
           </label>
           <textarea
             id="contact-message"
-            name="message"
+            name={FIELD_NAMES.message}
             rows={5}
+            required
+            maxLength={MESSAGE_MAX_LENGTH}
             value={values.message}
             onChange={(event) => update('message', event.target.value)}
             onBlur={() => blur('message')}
@@ -325,8 +321,8 @@ export function ContactForm() {
             aria-describedby={touched.message && errors.message ? 'contact-message-error' : undefined}
             placeholder="Tell us about your school, your group, or the course you are interested in."
             className={cn(
-              'w-full resize-y rounded-xl border bg-mist px-4 py-3 text-[15px] text-ink',
-              'placeholder:text-muted/75 focus:bg-white focus:outline-none transition-colors',
+              'w-full resize-y rounded-xl border bg-mist px-4 py-3 text-[16px] text-ink sm:text-[15px]',
+              'placeholder:text-muted/75 focus:bg-white transition-colors',
               touched.message && errors.message
                 ? 'border-[#E08A85] focus:border-[#D3564E]'
                 : 'border-line focus:border-electric',
@@ -338,14 +334,7 @@ export function ContactForm() {
         </div>
       </div>
 
-      <Button
-        type="submit"
-        kind="accent"
-        size="lg"
-        fullWidth
-        disabled={isSubmitting}
-        className="mt-7"
-      >
+      <Button type="submit" kind="accent" size="lg" fullWidth disabled={isSubmitting} className="mt-7">
         {isSubmitting ? (
           <span className="inline-flex items-center gap-2">
             <Loader2 className="size-[18px] animate-spin" aria-hidden="true" />
@@ -359,8 +348,38 @@ export function ContactForm() {
         )}
       </Button>
 
+      {/* Announced by screen readers as soon as the submission starts. */}
+      <p role="status" aria-live="polite" className="sr-only">
+        {isSubmitting ? 'Sending your inquiry. Please wait.' : ''}
+      </p>
+
       <p className="t-small mt-4 text-center text-muted">
-        We only use your details to reply to this enquiry.
+        The information you provide will be used only to respond to your inquiry.
+      </p>
+
+      <p className="t-small mt-2 text-center text-muted">
+        Prefer not to use the form? Email{' '}
+        <a
+          href={`mailto:${contactDetails.email}`}
+          aria-label="Email Shikshya Tech Hub"
+          className="font-semibold text-electric hover:underline"
+        >
+          {contactDetails.email}
+        </a>{' '}
+        or call{' '}
+        {contactDetails.phones.map((phone, index) => (
+          <span key={phone.href}>
+            {index > 0 ? ' or ' : ''}
+            <a
+              href={phone.href}
+              aria-label={`Call Shikshya Tech Hub at ${phone.display}`}
+              className="font-semibold text-electric hover:underline"
+            >
+              {phone.display}
+            </a>
+          </span>
+        ))}
+        .
       </p>
     </form>
   );
@@ -372,7 +391,7 @@ export function ContactForm() {
 
 function Field({
   label,
-  name,
+  field,
   value,
   error,
   onChange,
@@ -383,7 +402,7 @@ function Field({
   autoComplete,
 }: {
   label: string;
-  name: FieldName;
+  field: FieldName;
   value: string;
   error?: string;
   onChange: (field: FieldName, value: string) => void;
@@ -393,7 +412,7 @@ function Field({
   placeholder?: string;
   autoComplete?: string;
 }) {
-  const id = `contact-${name}`;
+  const id = `contact-${field}`;
   const errorId = `${id}-error`;
 
   return (
@@ -404,18 +423,20 @@ function Field({
 
       <input
         id={id}
-        name={name}
+        name={FIELD_NAMES[field]}
         type={type}
+        required={required}
+        maxLength={200}
         value={value}
-        onChange={(event) => onChange(name, event.target.value)}
-        onBlur={() => onBlur(name)}
+        onChange={(event) => onChange(field, event.target.value)}
+        onBlur={() => onBlur(field)}
         placeholder={placeholder}
         autoComplete={autoComplete}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         className={cn(
-          'h-12 w-full rounded-xl border bg-mist px-4 text-[15px] text-ink',
-          'placeholder:text-muted/75 focus:bg-white focus:outline-none transition-colors',
+          'h-12 w-full rounded-xl border bg-mist px-4 text-[16px] text-ink sm:text-[15px]',
+          'placeholder:text-muted/75 focus:bg-white transition-colors',
           error ? 'border-[#E08A85] focus:border-[#D3564E]' : 'border-line focus:border-electric',
         )}
       />

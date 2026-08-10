@@ -4,6 +4,7 @@ import { Stats } from '@/components/sections/Stats';
 import { About } from '@/components/sections/About';
 import { CoursesPreview } from '@/components/sections/CoursesPreview';
 import { WhyUs } from '@/components/sections/WhyUs';
+import { LearningInAction } from '@/components/sections/LearningInAction';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { TutorsPreview } from '@/components/sections/TutorsPreview';
 import { SchoolsCTA } from '@/components/sections/SchoolsCTA';
@@ -26,6 +27,7 @@ export default function HomePage() {
       <About />
       <CoursesPreview />
       <WhyUs />
+      <LearningInAction />
       <HowItWorks />
       <TutorsPreview />
       <SchoolsCTA />

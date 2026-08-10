@@ -4,7 +4,23 @@
       "Bash(python3 -c ' *)",
       "Bash(node interact.mjs)",
       "Bash(pkill -f \"serve@14\")",
-      "Bash(pkill -f \"serve out\")"
+      "Bash(pkill -f \"serve out\")",
+      "Bash(identify public/og.png)",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('public/og.png'\\); print\\('og.png', im.size\\)\")",
+      "Bash(pkill -f \"next dev -p 3111\")",
+      "Bash(pkill -f \"google-chrome.*9333\")",
+      "Bash(curl -s -o /dev/null -w \"3111:%{http_code}\\\\n\" --max-time 3 http://localhost:3111/)",
+      "Bash(ls -la ~/Downloads 2>/dev/null | head -20; echo \"=== recent images in home/tmp \\(last 6h\\) ===\"; find ~/Downloads ~/Desktop ~/Pictures /tmp/claude-1000 /tmp -maxdepth 3 -type f \\\\\\( -iname \"*.jpg\" -o -iname \"*.jpeg\" -o -iname \"*.png\" -o -iname \"*.webp\" \\\\\\) -mmin -360 -printf \"%TY-%Tm-%Td %TH:%TM %10s  %p\\\\n\" 2>/dev/null | sort -r | head -40)",
+      "Read(//tmp/claude-1000/**)",
+      "Bash(python3 -c \"import json;print\\([k for k in json.load\\(open\\('package.json'\\)\\)['scripts']]\\)\")",
+      "Bash(curl -s -o /dev/null --max-time 2 -w \"port3111:%{http_code}\\\\n\" http://localhost:3111/)",
+      "Bash(curl -s -o /dev/null -w \"contact:%{http_code}\\\\n\" http://localhost:3111/contact/)",
+      "Bash(grep -rhoiE \"\\(password|passwd|smtp|api[_-]?key|client[_-]?secret|private[_-]?key|access[_-]?token|bearer [a-z0-9]{10,}|sk_live|xox[baprs]-\\)\" out/)",
+      "Bash(grep -vE \"npm notice|^$\")",
+      "Bash(cp -p ~/Downloads/1.jpeg public/images/programs/learning-program-group-01.jpeg)",
+      "Bash(cp -p ~/Downloads/2.jpeg public/images/programs/community-program-01.jpeg)",
+      "Bash(cp -p ~/Downloads/3.jpeg public/images/programs/learning-program-group-02.jpeg)",
+      "Bash(cp -p ~/Downloads/CEO.jpeg public/images/leadership/apil-kunwar-ceo.jpeg)"
     ]
   }
 }

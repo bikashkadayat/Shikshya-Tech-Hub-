@@ -1,19 +1,18 @@
-import { EditableBadge } from '@/components/ui/Badge';
 import { IconTile } from '@/components/ui/IconTile';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ContactForm } from '@/components/forms/ContactForm';
-import { contactDetails } from '@/data/site';
+import { contactCards } from '@/data/contact';
 import { cn } from '@/lib/utils';
 
 const gradients = ['g-blue', 'g-cyan', 'g-brand', 'g-green'];
 
-/** Contact detail tiles — placeholders stay clearly labelled until filled in. */
+/** Official contact detail tiles. Values come from src/data/contact.ts. */
 export function ContactDetailList({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
   return (
     <ul className="flex flex-col gap-4">
-      {contactDetails.map((detail, index) => (
-        <li key={detail.label}>
+      {contactCards.map((card, index) => (
+        <li key={card.label}>
           <div
             className={cn(
               'flex items-center gap-4 rounded-card border p-4 sm:p-5',
@@ -22,44 +21,43 @@ export function ContactDetailList({ tone = 'light' }: { tone?: 'light' | 'dark' 
                 : 'border-line bg-white shadow-softsm',
             )}
           >
-            <IconTile icon={detail.icon} gradient={gradients[index % gradients.length]} size="sm" />
+            <IconTile icon={card.icon} gradient={gradients[index % gradients.length]} size="sm" />
 
             <div className="min-w-0">
-              <p
-                className={cn(
-                  't-mono',
-                  tone === 'dark' ? 'text-onmute/80' : 'text-muted',
-                )}
-              >
-                {detail.label}
+              <p className={cn('t-mono', tone === 'dark' ? 'text-onmute/80' : 'text-muted')}>
+                {card.label}
               </p>
 
-              {detail.value ? (
-                detail.href ? (
-                  <a
-                    href={detail.href}
-                    className={cn(
-                      'mt-1 block font-semibold break-words transition-colors',
-                      tone === 'dark' ? 'text-white hover:text-electric2' : 'text-ink hover:text-electric',
-                    )}
-                  >
-                    {detail.value}
-                  </a>
-                ) : (
-                  <p
-                    className={cn(
-                      'mt-1 font-semibold break-words',
-                      tone === 'dark' ? 'text-white' : 'text-ink',
-                    )}
-                  >
-                    {detail.value}
-                  </p>
-                )
-              ) : (
-                <p className="mt-1.5">
-                  <EditableBadge>{detail.hint}</EditableBadge>
-                </p>
-              )}
+              {/* One card can hold several entries — e.g. both phone numbers. */}
+              <div className="mt-0.5 flex flex-col">
+                {card.entries.map((entry) =>
+                  entry.href ? (
+                    <a
+                      key={entry.display}
+                      href={entry.href}
+                      aria-label={entry.ariaLabel}
+                      className={cn(
+                        'block py-2 font-semibold break-words transition-colors',
+                        tone === 'dark'
+                          ? 'text-white hover:text-electric2'
+                          : 'text-ink hover:text-electric',
+                      )}
+                    >
+                      {entry.display}
+                    </a>
+                  ) : (
+                    <p
+                      key={entry.display}
+                      className={cn(
+                        'py-2 font-semibold break-words',
+                        tone === 'dark' ? 'text-white' : 'text-ink',
+                      )}
+                    >
+                      {entry.display}
+                    </p>
+                  ),
+                )}
+              </div>
             </div>
           </div>
         </li>

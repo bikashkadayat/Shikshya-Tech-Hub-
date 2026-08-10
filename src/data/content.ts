@@ -226,22 +226,6 @@ export const homeFaqs: { question: string; answer: string }[] = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/* Testimonials — deliberately empty                                           */
+/* Testimonials — moved to src/data/testimonials.ts                            */
 /* -------------------------------------------------------------------------- */
-
-/**
- * CONTENT RULE: no invented testimonials, ever. These render as clearly
- * labelled skeleton placeholders. To publish a real one, fill in `quote`,
- * `author` and `role`, and the card switches to the real layout automatically.
- */
-export type Testimonial = {
-  quote: string | null;
-  author: string | null;
-  role: string | null;
-};
-
-export const testimonials: Testimonial[] = [
-  { quote: null, author: null, role: null },
-  { quote: null, author: null, role: null },
-  { quote: null, author: null, role: null },
-];
+/* They now have their own file, like courses, tutors and workshops.           */

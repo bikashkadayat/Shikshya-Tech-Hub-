@@ -7,6 +7,8 @@ import { Reveal } from '@/components/ui/Reveal';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Eyebrow } from '@/components/ui/Eyebrow';
+import { ProgramFigure } from '@/components/programs/ProgramFigure';
+import { getProgramImage } from '@/data/programGallery';
 import { partnershipProcess, schoolBenefits } from '@/data/content';
 
 export const metadata: Metadata = {
@@ -116,6 +118,27 @@ export default function SchoolsPage() {
             </Reveal>
           ))}
         </ol>
+      </Section>
+
+      {/* ---------------- Program highlight photograph ---------------- */}
+      <Section tone="mist" size="sm">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+          <SectionHeading
+            eyebrow="Program Highlights"
+            align="center"
+            title="Programs in Progress"
+            subtitle="A look at the kind of session we run with schools and community groups."
+          />
+
+          <Reveal className="w-full">
+            <ProgramFigure
+              image={getProgramImage('learning-program-group-02')}
+              ratio="aspect-[3/2]"
+              sizes="(min-width: 1024px) 768px, 92vw"
+              figureClassName="items-center text-center"
+            />
+          </Reveal>
+        </div>
       </Section>
 
       {/* ---------------- Closing CTA band ---------------- */}

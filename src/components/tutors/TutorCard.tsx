@@ -3,7 +3,8 @@ import { ArrowRight } from 'lucide-react';
 import { SocialIcon } from '@/components/brand/SocialIcon';
 import { EditableBadge } from '@/components/ui/Badge';
 import { Chip } from '@/components/ui/Chip';
-import { tutorInitials, type Tutor } from '@/data/tutors';
+import { TutorAvatar } from './TutorAvatar';
+import { type Tutor } from '@/data/tutors';
 import { cn } from '@/lib/utils';
 
 export function TutorCard({ tutor, className }: { tutor: Tutor; className?: string }) {
@@ -18,35 +19,10 @@ export function TutorCard({ tutor, className }: { tutor: Tutor; className?: stri
       )}
     >
       <div className="flex items-start gap-4">
-        {/* Avatar — gradient tile with initials, or an "Add photo" slot. */}
-        {placeholder ? (
-          <span
-            aria-hidden="true"
-            className="flex size-16 shrink-0 flex-col items-center justify-center rounded-2xl border border-dashed border-electric/35 bg-mist text-center font-mono text-[9px] leading-tight tracking-wide text-electric/70 uppercase"
-          >
-            Add
-            <br />
-            photo
-          </span>
-        ) : (
-          <span
-            aria-hidden="true"
-            className={cn(
-              'flex size-16 shrink-0 items-center justify-center rounded-2xl font-display text-xl font-extrabold text-white shadow-softsm',
-              tutor.gradient,
-            )}
-          >
-            {tutorInitials(tutor)}
-          </span>
-        )}
+        <TutorAvatar {...tutor} size="card" className={cn(placeholder && 'opacity-70')} />
 
         <div className="min-w-0">
-          <h3
-            className={cn(
-              't-card-title truncate',
-              placeholder ? 'text-muted/70' : 'text-ink',
-            )}
-          >
+          <h3 className={cn('t-card-title', placeholder ? 'text-muted/70' : 'text-ink')}>
             {tutor.name}
           </h3>
           <p className="t-small mt-1 text-electric">{tutor.roles.join(' · ')}</p>
@@ -60,8 +36,17 @@ export function TutorCard({ tutor, className }: { tutor: Tutor; className?: stri
 
       {placeholder ? <EditableBadge className="mt-4 self-start">Editable profile</EditableBadge> : null}
 
-      {tutor.education && !placeholder ? (
-        <p className="mt-4 text-[13px] font-semibold text-ink">{tutor.education}</p>
+      {/* Education / experience line — only what was actually supplied. */}
+      {!placeholder && (tutor.education || tutor.experience) ? (
+        <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] font-semibold text-ink">
+          {tutor.education ? <span>{tutor.education}</span> : null}
+          {tutor.education && tutor.experience ? (
+            <span aria-hidden="true" className="size-1 rounded-full bg-muted/40" />
+          ) : null}
+          {tutor.experience ? (
+            <span className="text-muted">{tutor.experience} experience</span>
+          ) : null}
+        </p>
       ) : null}
 
       <ul className="mt-4 flex flex-wrap gap-2">
@@ -76,6 +61,7 @@ export function TutorCard({ tutor, className }: { tutor: Tutor; className?: stri
         <ul className="flex items-center gap-2">
           {(['linkedin', 'github'] as const).map((network) => {
             const href = tutor[network];
+            const label = network === 'linkedin' ? 'LinkedIn' : 'GitHub';
 
             return (
               <li key={network}>
@@ -84,14 +70,14 @@ export function TutorCard({ tutor, className }: { tutor: Tutor; className?: stri
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${tutor.name} on ${network === 'linkedin' ? 'LinkedIn' : 'GitHub'}`}
+                    aria-label={`${tutor.name} on ${label}`}
                     className="flex size-9 items-center justify-center rounded-full bg-mist text-muted transition-colors hover:bg-electric hover:text-white"
                   >
                     <SocialIcon name={network} className="size-4" />
                   </a>
                 ) : (
                   <span
-                    title={`${network === 'linkedin' ? 'LinkedIn' : 'GitHub'} — add a link in src/data/tutors.ts`}
+                    title={`${label} — add a link in src/data/tutors.ts`}
                     className="flex size-9 items-center justify-center rounded-full border border-dashed border-line text-muted/40"
                   >
                     <SocialIcon name={network} className="size-4" />
@@ -114,6 +100,7 @@ export function TutorCard({ tutor, className }: { tutor: Tutor; className?: stri
               className="size-4 transition-transform duration-200 group-hover:translate-x-1"
               aria-hidden="true"
             />
+            <span className="sr-only"> — {tutor.name}</span>
           </Link>
         )}
       </div>

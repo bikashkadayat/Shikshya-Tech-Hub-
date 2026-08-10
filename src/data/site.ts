@@ -49,50 +49,10 @@ export const navItems: NavItem[] = [
 ];
 
 /* -------------------------------------------------------------------------- */
-/* Contact details — editable placeholders until real values are supplied       */
+/* Contact details — see src/data/contact.ts                                   */
 /* -------------------------------------------------------------------------- */
-
-export type ContactDetail = {
-  icon: IconName;
-  label: string;
-  /** `null` renders as an editable placeholder. */
-  value: string | null;
-  /** Shown in the placeholder state so the owner knows what to type. */
-  hint: string;
-  /** `mailto:` / `tel:` / map link. Only used when `value` is set. */
-  href?: string | null;
-};
-
-export const contactDetails: ContactDetail[] = [
-  {
-    icon: 'globe',
-    label: 'Email',
-    value: null,
-    hint: 'Add your email address',
-    href: null,
-  },
-  {
-    icon: 'headphones',
-    label: 'Phone',
-    value: null,
-    hint: 'Add your phone number',
-    href: null,
-  },
-  {
-    icon: 'building',
-    label: 'Address',
-    value: null,
-    hint: 'Add your office address',
-    href: null,
-  },
-  {
-    icon: 'clock',
-    label: 'Office hours',
-    value: null,
-    hint: 'Add your opening hours',
-    href: null,
-  },
-];
+/* The official email, phone numbers, address and office hours live in their   */
+/* own file, so there is exactly one place to edit them.                       */
 
 export type SocialLink = {
   label: string;

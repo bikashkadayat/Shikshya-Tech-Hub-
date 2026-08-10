@@ -23,10 +23,11 @@ form validation) runs in the browser from local data.
   - [Courses](#courses)
   - [Workshops](#workshops)
   - [Tutors](#tutors)
-  - [Contact details, socials and navigation](#contact-details-socials-and-navigation)
+  - [Contact details](#contact-details)
+  - [Socials and navigation](#socials-and-navigation)
   - [Testimonials](#testimonials)
   - [Using your real logo file](#using-your-real-logo-file)
-- [Connecting the contact form](#connecting-the-contact-form)
+- [The contact form](#the-contact-form)
 - [Deploying to Cloudflare Pages](#deploying-to-cloudflare-pages)
   - [1. Create the Pages project](#1-create-the-pages-project)
   - [2. Create a Cloudflare API token](#2-create-a-cloudflare-api-token)
@@ -62,8 +63,8 @@ Requires **Node.js 20.9+** (Node 20 LTS or newer).
 
 ```bash
 git clone <your-repo-url>
-cd "SHIKSHYA TECH HUB"
-npm install
+
+
 npm run dev
 ```
 
@@ -246,18 +247,30 @@ To publish a new tutor, replace a placeholder's fields and set `isPlaceholder: f
 > Do not add years of experience, employers, awards, certifications or student numbers unless you
 > can verify them — see [Content rules](#content-rules).
 
-### Contact details, socials and navigation
+### Contact details
+
+Edit [`src/data/contact.ts`](src/data/contact.ts) — the single source for the email, both phone
+numbers, the address and the office hours. The contact page cards, the home page contact block and
+the inquiry form's fallback links all read from it, so one edit updates every one of them.
+
+```ts
+export const contactDetails = {
+  email: 'sikshyatechhub@gmail.com',
+  phones: [{ display: '9765437327', href: 'tel:+9779765437327' }, …],
+  location: 'Kathmandu, Bagmati Province, Nepal',
+  officeHours: '7:00 AM – 6:00 PM',
+};
+```
+
+Changing the email also repoints the inquiry form, since `formSubmitAction` is derived from it —
+note that a new address needs its own FormSubmit activation.
+
+### Socials and navigation
 
 Edit [`src/data/site.ts`](src/data/site.ts).
 
 - `siteConfig.url` — **change this to your real domain** before deploying (it drives canonical URLs,
   OpenGraph tags and the sitemap).
-- `contactDetails` — email, phone, address and office hours. Each ships as `value: null`, which
-  renders an "Add your …" placeholder. Set `value` and `href` to publish it:
-  ```ts
-  { icon: 'globe', label: 'Email', value: 'hello@example.com',
-    hint: 'Add your email address', href: 'mailto:hello@example.com' }
-  ```
 - `socialLinks` — set `href` to a real URL to activate each button.
 - `navItems` — the navbar and mobile menu.
 - `footerColumns` — the four footer link columns.
@@ -288,28 +301,39 @@ Every navbar, mobile menu and footer picks it up automatically.
 
 ---
 
-## Connecting the contact form
+## The contact form
 
-The form is **frontend-only**. It validates properly, shows loading, success and error states — and
-it never claims a message was sent when it was not. With no endpoint configured, a valid submission
-says exactly that.
+The site is frontend-only, so the inquiry form posts straight to
+[FormSubmit](https://formsubmit.co) — a plain HTML `POST` to
+`https://formsubmit.co/sikshyatechhub@gmail.com`, which emails the inquiry on. No server, no API
+route, no keys, nothing secret in the bundle: the endpoint is just the public address.
 
-To make it deliver for real, set one constant in
-[`src/components/forms/ContactForm.tsx`](src/components/forms/ContactForm.tsx):
+It is a normal form submission rather than a `fetch()` call on purpose — `_captcha` needs a real
+page to draw its challenge, so an AJAX POST would lose spam protection. The browser lands on
+FormSubmit's confirmation page, which is also why the app never claims delivery itself.
 
-```ts
-const FORM_ENDPOINT: string | null = 'https://formspree.io/f/xxxxxxx';
+Fields arrive in the email as **Full Name, Email, Phone, School or Organization, Interested Course,
+Message**, under the subject *New Shikshya Tech Hub Website Inquiry*.
+
+### Activating it (once, after the first deploy)
+
+1. Submit the form once **from the live site**.
+2. FormSubmit emails an activation link to `sikshyatechhub@gmail.com` — check Spam and Promotions.
+3. Open it and confirm.
+4. Send one more test inquiry to verify delivery.
+
+Nothing is forwarded until that activation is done.
+
+### Optional: your own thank-you page
+
+Once the real production domain is live, add a `/thank-you` route and one hidden field to the form:
+
+```tsx
+<input type="hidden" name="_next" value="https://<your-domain>/thank-you/" />
 ```
 
-Any service that accepts a JSON `POST` works — Formspree, Web3Forms, Getform, or your own
-Cloudflare Worker. The payload is:
-
-```json
-{ "name": "", "email": "", "phone": "", "organization": "", "course": "", "message": "" }
-```
-
-Nothing else needs changing: validation, the loading spinner, the success panel and the error panel
-are already wired.
+It must be an absolute URL on the live domain — `localhost` will not work. Without it, visitors see
+FormSubmit's own confirmation page, which is a perfectly fine default.
 
 ---
 

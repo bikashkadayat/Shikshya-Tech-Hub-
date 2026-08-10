@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { CategoryBadge, LevelBadge } from '@/components/ui/Badge';
+import { CourseDuration } from '@/components/courses/CourseDuration';
 import { IconTile } from '@/components/ui/IconTile';
 import { categoryGradient, type Course } from '@/data/courses';
 import { cn } from '@/lib/utils';
@@ -42,6 +43,8 @@ export function CourseCard({ course, className }: { course: Course; className?: 
       </h3>
 
       <p className="t-small mt-2.5 line-clamp-3 text-muted">{course.summary}</p>
+
+      <CourseDuration duration={course.duration} className="mt-4" />
 
       <div className="mt-auto flex items-center justify-between gap-3 pt-6">
         <LevelBadge level={course.level} />

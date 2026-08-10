@@ -2,6 +2,7 @@ import { Check } from 'lucide-react';
 import { Accordion } from '@/components/ui/Accordion';
 import { EditableBadge, LevelBadge } from '@/components/ui/Badge';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { CourseDuration } from '@/components/courses/CourseDuration';
 import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Container } from '@/components/ui/Container';
@@ -22,8 +23,18 @@ import { cn } from '@/lib/utils';
 export function CourseDetail({ course }: { course: Course }) {
   const gradient = categoryGradient[course.category];
 
-  const quickFacts = [
-    { label: 'Duration', value: course.duration, hint: 'Set a duration' },
+  /**
+   * Shared by the navy hero strip and the enrol panel, so both always show the
+   * same facts. `duration` is rendered by `CourseDuration` in whichever tone
+   * the surface needs.
+   */
+  const quickFacts: {
+    label: string;
+    value: string | null;
+    hint: string | null;
+    duration?: Course['duration'];
+  }[] = [
+    { label: 'Duration', value: null, hint: null, duration: course.duration },
     { label: 'Skill level', value: course.level, hint: null },
     {
       label: 'Projects',
@@ -76,7 +87,11 @@ export function CourseDetail({ course }: { course: Course }) {
               <div key={fact.label} className="bg-navy-tile px-5 py-4">
                 <dt className="t-mono text-onmute/80">{fact.label}</dt>
                 <dd className="mt-1.5 font-display text-[17px] font-bold text-white">
-                  {fact.value ?? <EditableBadge>{fact.hint}</EditableBadge>}
+                  {fact.duration ? (
+                    <CourseDuration duration={fact.duration} variant="hero" />
+                  ) : (
+                    (fact.value ?? <EditableBadge>{fact.hint}</EditableBadge>)
+                  )}
                 </dd>
               </div>
             ))}
@@ -227,7 +242,11 @@ export function CourseDetail({ course }: { course: Course }) {
                   <div key={fact.label} className="flex items-center justify-between gap-3 py-3">
                     <dt className="t-small text-muted">{fact.label}</dt>
                     <dd className="text-right text-sm font-semibold text-ink">
-                      {fact.value ?? <EditableBadge>{fact.hint}</EditableBadge>}
+                      {fact.duration ? (
+                        <CourseDuration duration={fact.duration} variant="row" />
+                      ) : (
+                        (fact.value ?? <EditableBadge>{fact.hint}</EditableBadge>)
+                      )}
                     </dd>
                   </div>
                 ))}

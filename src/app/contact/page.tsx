@@ -6,6 +6,7 @@ import { FAQ } from '@/components/sections/FAQ';
 import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { contactIntro } from '@/data/contact';
 import { socialLinks } from '@/data/site';
 
 export const metadata: Metadata = {
@@ -39,10 +40,16 @@ export default function ContactPage() {
             <SectionHeading
               eyebrow="Contact Information"
               title="How to Reach Us"
-              subtitle="Details marked as editable have not been published yet — they are placeholders, not real contact points."
+              subtitle="For more details, contact us by email or phone, or send an inquiry using the form."
             />
 
-            <ContactDetailList />
+            <div>
+              {/* Lead-in for the cards below. */}
+              <p className="t-small font-semibold text-ink">{contactIntro}</p>
+              <div className="mt-3">
+                <ContactDetailList />
+              </div>
+            </div>
 
             <div>
               <h3 className="font-display text-[15px] font-bold text-ink">Follow along</h3>

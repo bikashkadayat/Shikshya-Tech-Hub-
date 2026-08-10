@@ -1,16 +1,23 @@
-import { Quote } from 'lucide-react';
+import Image from 'next/image';
+import { Quote, User } from 'lucide-react';
 import { EditableBadge } from '@/components/ui/Badge';
 import { Reveal } from '@/components/ui/Reveal';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { testimonials } from '@/data/content';
+import { hasSampleTestimonials, testimonials, type Testimonial } from '@/data/testimonials';
 
 /**
- * CONTENT RULE: there are no invented testimonials on this site.
+ * CONTENT RULE: nothing on this site is presented as real feedback unless it
+ * is real, approved feedback.
  *
- * Until real quotes are supplied, each card renders as a deliberate, labelled
- * skeleton. Fill in `quote`, `author` and `role` in src/data/content.ts and the
- * card switches to the published layout automatically.
+ * DEVELOPMENT ONLY: the entries currently rendered here are sample/demo
+ * content for layout preview and testing. Every card with `isSample: true`
+ * shows a visible "Sample Testimonial" badge, and the section subtitle says so
+ * in plain language. All sample entries must be replaced with approved real
+ * feedback in src/data/testimonials.ts before production launch.
+ *
+ * Publishing real feedback is a data change only — set `isSample: false` and
+ * the badge disappears; add an `image` and the avatar uses it.
  */
 export function Testimonials() {
   return (
@@ -19,70 +26,66 @@ export function Testimonials() {
         eyebrow="Voices"
         align="center"
         title="What Students and Schools Say"
-        subtitle="This section is reserved for real feedback from students, parents and partner institutions. Nothing here is written on their behalf."
+        subtitle={
+          hasSampleTestimonials
+            ? 'Sample testimonials are displayed for layout preview. Names and feedback will be published as verified testimonials only after approval.'
+            : 'Feedback from students, parents and partner institutions, published with their approval.'
+        }
       />
 
       <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {testimonials.map((testimonial, index) => {
-          const isPublished = Boolean(testimonial.quote && testimonial.author);
-
-          return (
-            <Reveal as="li" key={index} delay={index * 80}>
-              <figure
-                className={cardClass(isPublished)}
-              >
-                <Quote
-                  className={isPublished ? 'size-8 text-electric/30' : 'size-8 text-muted/25'}
-                  aria-hidden="true"
-                />
-
-                {isPublished ? (
-                  <>
-                    <blockquote className="t-body mt-4 flex-1 text-ink/85">
-                      “{testimonial.quote}”
-                    </blockquote>
-                    <figcaption className="mt-5 border-t border-line pt-4">
-                      <span className="block font-display text-[15px] font-bold text-ink">
-                        {testimonial.author}
-                      </span>
-                      {testimonial.role ? (
-                        <span className="t-small text-muted">{testimonial.role}</span>
-                      ) : null}
-                    </figcaption>
-                  </>
-                ) : (
-                  <>
-                    {/* Skeleton bars — clearly a slot awaiting real content. */}
-                    <div className="mt-4 flex flex-1 flex-col gap-2.5" aria-hidden="true">
-                      <span className="block h-2.5 w-full rounded-full bg-mist2" />
-                      <span className="block h-2.5 w-[92%] rounded-full bg-mist2" />
-                      <span className="block h-2.5 w-[78%] rounded-full bg-mist2" />
-                      <span className="block h-2.5 w-[60%] rounded-full bg-mist2" />
-                    </div>
-
-                    <figcaption className="mt-5 flex items-center gap-3 border-t border-line pt-4">
-                      <span
-                        aria-hidden="true"
-                        className="size-9 shrink-0 rounded-full border border-dashed border-line bg-mist"
-                      />
-                      <span className="min-w-0">
-                        <EditableBadge>Student / School testimonial</EditableBadge>
-                      </span>
-                    </figcaption>
-                  </>
-                )}
-              </figure>
-            </Reveal>
-          );
-        })}
+        {testimonials.map((testimonial, index) => (
+          <Reveal as="li" key={testimonial.id} delay={index * 80}>
+            <TestimonialCard testimonial={testimonial} />
+          </Reveal>
+        ))}
       </ul>
     </Section>
   );
 }
 
-function cardClass(isPublished: boolean) {
-  return [
-    'flex h-full flex-col rounded-card bg-white p-6 shadow-softsm',
-    isPublished ? 'border border-line card-hover' : 'border border-dashed border-line',
-  ].join(' ');
+function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+  const { quote, displayName, audienceType, organization, image, imageAlt, isSample } = testimonial;
+
+  return (
+    <figure className="card-hover flex h-full flex-col rounded-card border border-line bg-white p-6 shadow-softsm">
+      <div className="flex items-start justify-between gap-3">
+        <Quote className="size-8 shrink-0 text-electric/30" aria-hidden="true" />
+        {isSample ? <EditableBadge>Sample Testimonial</EditableBadge> : null}
+      </div>
+
+      <blockquote className="t-body mt-4 flex-1 text-ink/85">“{quote}”</blockquote>
+
+      <figcaption className="mt-5 flex items-center gap-3 border-t border-line pt-4">
+        {/* No fabricated portraits: without an approved image this stays a
+            neutral, non-identifying avatar rather than initials of a name
+            that does not belong to a real person. */}
+        <span className="relative size-9 shrink-0 overflow-hidden rounded-full border border-line bg-mist">
+          {image ? (
+            <Image
+              src={image}
+              alt={imageAlt || `${displayName} profile image`}
+              fill
+              sizes="36px"
+              className="object-cover"
+            />
+          ) : (
+            <span className="flex size-full items-center justify-center text-muted/60">
+              <User className="size-4" aria-hidden="true" />
+            </span>
+          )}
+        </span>
+
+        <span className="min-w-0">
+          <cite className="block font-display text-[15px] font-bold text-ink not-italic">
+            {displayName}
+          </cite>
+          <span className="t-small text-muted">
+            {audienceType}
+            {organization ? ` · ${organization}` : null}
+          </span>
+        </span>
+      </figcaption>
+    </figure>
+  );
 }

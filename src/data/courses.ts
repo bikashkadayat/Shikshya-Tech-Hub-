@@ -24,6 +24,27 @@ export type CourseFaq = {
   answer: string;
 };
 
+export type DurationUnit = 'hours' | 'days' | 'weeks' | 'months';
+
+/**
+ * How long a course runs.
+ *
+ * `status` is the honest part:
+ * - `'confirmed'` — the schedule was supplied by Shikshya Tech Hub.
+ * - `'proposed'`  — a planning estimate sized from the course content in this
+ *   file. The UI labels these as a suggested duration so no visitor reads an
+ *   estimate as a committed timetable.
+ *
+ * `label` is what visitors see, so it is the value to edit when a schedule is
+ * agreed. For a range, `value` holds the upper bound.
+ */
+export type CourseDuration = {
+  value: number;
+  unit: DurationUnit;
+  label: string;
+  status: 'confirmed' | 'proposed';
+};
+
 export type Course = {
   slug: string;
   title: string;
@@ -32,8 +53,8 @@ export type Course = {
   icon: IconName;
   /** One-line description used on cards. */
   summary: string;
-  /** `null` renders as an editable placeholder — set it once you fix a schedule. */
-  duration: string | null;
+  /** How long the course runs. See `CourseDuration` for the `status` rule. */
+  duration: CourseDuration;
   /** Number of hands-on projects. `null` renders as an editable placeholder. */
   projects: number | null;
   certificate: string;
@@ -85,7 +106,8 @@ export const courses: Course[] = [
     icon: 'brain',
     summary:
       'Understand how artificial intelligence works and build your first machine learning models with real data.',
-    duration: '6–8 weeks',
+    // Supplied schedule — kept exactly as written.
+    duration: { value: 8, unit: 'weeks', label: '6–8 weeks', status: 'confirmed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
@@ -175,7 +197,7 @@ export const courses: Course[] = [
     icon: 'video',
     summary:
       'Turn raw footage into clean, watchable video — cutting, sound, colour and export, from scratch.',
-    duration: null,
+    duration: { value: 4, unit: 'weeks', label: '4 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
@@ -245,7 +267,7 @@ export const courses: Course[] = [
     icon: 'chat',
     summary:
       'Learn to work with AI tools properly — writing prompts that produce useful, reliable, honest results.',
-    duration: null,
+    duration: { value: 3, unit: 'weeks', label: '3 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
@@ -315,7 +337,7 @@ export const courses: Course[] = [
     icon: 'chart',
     summary:
       'Understand how brands grow online — content, social platforms, search and reading the numbers.',
-    duration: null,
+    duration: { value: 4, unit: 'weeks', label: '4 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
@@ -387,7 +409,7 @@ export const courses: Course[] = [
     icon: 'pen',
     summary:
       'Learn the rules behind good design — layout, type, colour and visual hierarchy — then use them.',
-    duration: null,
+    duration: { value: 4, unit: 'weeks', label: '4 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
@@ -452,7 +474,7 @@ export const courses: Course[] = [
     icon: 'code',
     summary:
       'Build real websites from the ground up — HTML, CSS and JavaScript, then publish them live.',
-    duration: null,
+    duration: { value: 6, unit: 'weeks', label: '6 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
@@ -523,7 +545,7 @@ export const courses: Course[] = [
     icon: 'smartphone',
     summary:
       'Design, build and run your own mobile app — screens, navigation, data and device features.',
-    duration: null,
+    duration: { value: 8, unit: 'weeks', label: '8 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
@@ -594,7 +616,7 @@ export const courses: Course[] = [
     icon: 'shield',
     summary:
       'Learn how attacks actually happen and how to defend accounts, devices and data against them.',
-    duration: null,
+    duration: { value: 4, unit: 'weeks', label: '4 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
@@ -671,7 +693,7 @@ export const courses: Course[] = [
     icon: 'robot',
     summary:
       'Build and program machines that sense and react — electronics, sensors, motors and code together.',
-    duration: null,
+    duration: { value: 6, unit: 'weeks', label: '6 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [

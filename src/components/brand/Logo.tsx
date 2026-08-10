@@ -18,10 +18,10 @@ import { cn } from '@/lib/utils';
  * Nothing else needs to change — every navbar and footer uses this component.
  * ---------------------------------------------------------------------------
  */
-const LOGO_MODE: 'wordmark' | 'image' = 'wordmark';
+const LOGO_MODE: 'wordmark' | 'image' = 'image';
 
-/** Aspect ratio of the source logo (620 × 212). */
-const LOGO_ASPECT = 620 / 212;
+/** Aspect ratio of the supplied artwork (public/logo.png, 608 × 200). */
+const LOGO_ASPECT = 608 / 200;
 
 type LogoProps = {
   /** Rendered height in pixels. Width follows the logo's aspect ratio. */

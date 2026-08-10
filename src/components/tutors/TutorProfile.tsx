@@ -1,41 +1,43 @@
-import { Check } from 'lucide-react';
+import { Check, Dot } from 'lucide-react';
 import { SocialIcon } from '@/components/brand/SocialIcon';
 import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { tutorInitials, type Tutor } from '@/data/tutors';
-import { cn } from '@/lib/utils';
+import { TutorAvatar } from './TutorAvatar';
+import { type Tutor } from '@/data/tutors';
 
 /**
- * Detailed profile block for a real tutor.
+ * Detailed profile block for a published tutor.
  *
- * Renders only what the data file actually contains — there is deliberately no
- * slot here for years of experience, employers, awards or student counts.
+ * Renders only what the data file actually contains — every field here was
+ * supplied by the tutor it describes.
  */
 export function TutorProfile({ tutor }: { tutor: Tutor }) {
   return (
-    <div id={tutor.slug} className="grid scroll-mt-28 gap-8 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-12">
+    <div
+      id={tutor.slug}
+      className="grid scroll-mt-28 gap-8 lg:grid-cols-[340px_minmax(0,1fr)] lg:gap-12"
+    >
       {/* ---------- Left: profile card ---------- */}
       <aside className="lg:sticky lg:top-28 lg:self-start">
         <div className="rounded-card border border-line bg-white p-6 text-center shadow-soft">
-          <span
-            aria-hidden="true"
-            className={cn(
-              'mx-auto flex size-24 items-center justify-center rounded-3xl font-display text-3xl font-extrabold text-white shadow-soft',
-              tutor.gradient,
-            )}
-          >
-            {tutorInitials(tutor)}
-          </span>
+          <TutorAvatar {...tutor} size="profile" className="mx-auto" />
 
           <h3 className="t-h3 mt-5 text-ink">{tutor.name}</h3>
           <p className="t-small mt-2 text-electric">{tutor.roles.join(' · ')}</p>
 
-          {tutor.education ? (
-            <p className="mt-3 inline-flex rounded-full bg-mist2 px-3 py-1 text-[13px] font-semibold text-ink">
-              {tutor.education}
-            </p>
-          ) : null}
+          <div className="mt-4 flex flex-wrap justify-center gap-2">
+            {tutor.education ? (
+              <span className="inline-flex rounded-full bg-mist2 px-3 py-1 text-[13px] font-semibold text-ink">
+                {tutor.education}
+              </span>
+            ) : null}
+            {tutor.experience ? (
+              <span className="inline-flex rounded-full bg-electric/8 px-3 py-1 text-[13px] font-semibold text-electric">
+                {tutor.experience} experience
+              </span>
+            ) : null}
+          </div>
 
           <ul className="mt-5 flex items-center justify-center gap-2.5">
             {(['linkedin', 'github'] as const).map((network) => {
@@ -73,7 +75,7 @@ export function TutorProfile({ tutor }: { tutor: Tutor }) {
         </div>
       </aside>
 
-      {/* ---------- Right: about, specialisations, skills ---------- */}
+      {/* ---------- Right: about, highlights, specialisations, skills ---------- */}
       <div className="flex min-w-0 flex-col gap-8">
         <section>
           <Eyebrow>About</Eyebrow>
@@ -86,6 +88,24 @@ export function TutorProfile({ tutor }: { tutor: Tutor }) {
             ))}
           </div>
         </section>
+
+        {tutor.highlights.length > 0 ? (
+          <section>
+            <Eyebrow>Highlights</Eyebrow>
+            <h3 className="t-h3 mt-4 text-ink">At a glance</h3>
+            <ul className="mt-4 flex flex-col gap-2.5">
+              {tutor.highlights.map((highlight) => (
+                <li
+                  key={highlight}
+                  className="flex items-start gap-2 rounded-tile bg-mist px-4 py-3"
+                >
+                  <Dot className="mt-0.5 size-5 shrink-0 text-electric" aria-hidden="true" />
+                  <span className="t-small text-ink/85">{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
 
         {tutor.specialisation ? (
           <section>

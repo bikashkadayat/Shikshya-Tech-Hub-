@@ -6,6 +6,8 @@ import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { CustomWorkshopCard, WorkshopCard } from '@/components/workshops/WorkshopCard';
 import { HowItWorks } from '@/components/sections/HowItWorks';
+import { ProgramFigure } from '@/components/programs/ProgramFigure';
+import { getProgramImage } from '@/data/programGallery';
 import { workshops } from '@/data/workshops';
 
 export const metadata: Metadata = {
@@ -55,6 +57,27 @@ export default function WorkshopsPage() {
             <CustomWorkshopCard />
           </Reveal>
         </ul>
+      </Section>
+
+      {/* Community learning — wide contextual photograph. */}
+      <Section tone="white" size="md">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Community Learning"
+              title="Learning Experiences for Schools and Communities"
+              subtitle="We support accessible, activity-based technology learning for students, educators, schools, and community groups."
+            />
+          </Reveal>
+
+          <Reveal delay={80}>
+            <ProgramFigure
+              image={getProgramImage('community-program-01')}
+              ratio="aspect-[3/2]"
+              sizes="(min-width: 1024px) 55vw, (min-width: 640px) 88vw, 92vw"
+            />
+          </Reveal>
+        </div>
       </Section>
 
       <HowItWorks />
