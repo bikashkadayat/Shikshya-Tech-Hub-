@@ -8,7 +8,7 @@ that looks dynamic (course search, category filters, the FAQ accordion, the mobi
 form validation) runs in the browser from local data.
 
 - **Live pages:** Home, Courses, Course Detail, Workshops, Tutors, Schools & Institutions, Contact
-- **Deploys free** to Cloudflare Pages from GitHub
+- **Deploys free** to GitHub Pages from GitHub Actions
 
 ---
 
@@ -28,12 +28,10 @@ form validation) runs in the browser from local data.
   - [Testimonials](#testimonials)
   - [Using your real logo file](#using-your-real-logo-file)
 - [The contact form](#the-contact-form)
-- [Deploying to Cloudflare Pages](#deploying-to-cloudflare-pages)
-  - [1. Create the Pages project](#1-create-the-pages-project)
-  - [2. Create a Cloudflare API token](#2-create-a-cloudflare-api-token)
-  - [3. Add the GitHub secrets](#3-add-the-github-secrets)
-  - [4. Push](#4-push)
-  - [Custom domain](#custom-domain)
+- [Deploying to GitHub Pages](#deploying-to-github-pages)
+  - [1. Point GitHub Pages at Actions](#1-point-github-pages-at-actions)
+  - [2. The custom domain](#2-the-custom-domain)
+  - [3. Push](#3-push)
 - [SEO checklist](#seo-checklist)
 - [Accessibility](#accessibility)
 - [Content rules](#content-rules)
@@ -50,7 +48,8 @@ form validation) runs in the browser from local data.
 | UI         | React 19                                                   |
 | Icons      | `lucide-react` (brand glyphs hand-drawn in `SocialIcon`)   |
 | Fonts      | Poppins (display), Inter (body), JetBrains Mono (labels)   |
-| Hosting    | Cloudflare Pages (static), deployed by GitHub Actions      |
+| Hosting    | GitHub Pages (static), deployed by GitHub Actions          |
+| DNS        | Cloudflare (DNS + proxy only — no Cloudflare hosting)      |
 
 There is deliberately **no** runtime dependency on Node, so the output is a plain folder of HTML,
 CSS, JS and images that any static host can serve.
@@ -83,8 +82,8 @@ Open <http://localhost:3000>.
 | `npm run lint`      | ESLint (Next.js core-web-vitals + TypeScript rules)                  |
 | `npm run typecheck` | `tsc --noEmit`                                                       |
 
-> `npm run build` writes to `out/`. That folder is what gets uploaded to Cloudflare; it is
-> git-ignored.
+> `npm run build` writes to `out/`. That folder is what gets published to GitHub Pages; it is
+> git-ignored and built fresh by CI on every push.
 
 ---
 
@@ -92,12 +91,14 @@ Open <http://localhost:3000>.
 
 ```
 .
-├── .github/workflows/deploy.yml   # Cloudflare Pages deployment
+├── .github/workflows/pages.yml    # GitHub Pages build + deployment
+├── CNAME                          # Custom domain (repository root copy)
 ├── public/                        # Static assets served from /
 │   ├── favicon.svg, favicon.ico, apple-touch-icon.png
 │   ├── icon-192.png, icon-512.png, site.webmanifest
 │   ├── og.png                     # OpenGraph / Twitter share image
-│   └── _headers                   # Cloudflare cache + security headers
+│   ├── CNAME                      # Custom domain — copied into out/ by the build
+│   └── _headers                   # Inert on GitHub Pages (Cloudflare Pages format)
 ├── src/
 │   ├── app/                       # Routes (App Router)
 │   │   ├── layout.tsx             # Fonts, global metadata, navbar + footer
@@ -137,7 +138,6 @@ Open <http://localhost:3000>.
 │   │
 │   └── lib/                       # icons registry, `cn` helper
 ├── next.config.mjs                # static export config
-├── wrangler.toml                  # Cloudflare Pages project config
 └── tsconfig.json
 ```
 
@@ -337,48 +337,53 @@ FormSubmit's own confirmation page, which is a perfectly fine default.
 
 ---
 
-## Deploying to Cloudflare Pages
+## Deploying to GitHub Pages
 
 The build produces a static `out/` folder, so hosting is free and requires no server.
+GitHub Pages hosts the site; Cloudflare only provides DNS (and the optional proxy).
 
-### 1. Create the Pages project
+**Live domain:** <https://shikshyatechhub.bikashkadayat.com.np>
 
-1. Push this repository to GitHub.
-2. In the Cloudflare dashboard: **Workers & Pages → Create → Pages → Connect to Git** (or
-   **Direct Upload** — the Action below uploads for you either way).
-3. Name the project **`shikshya-tech-hub`**.
+### 1. Point GitHub Pages at Actions
 
-> If you use a different project name, update it in **both** `wrangler.toml` and
-> `.github/workflows/deploy.yml`.
+**Repository → Settings → Pages → Build and deployment → Source: _GitHub Actions_.**
 
-If you let Cloudflare build it directly instead of using the Action, use:
+This is required. With the older *Deploy from a branch* source, GitHub runs Jekyll over the
+repository root and publishes the rendered `README.md` — not this Next.js site — because `out/`
+is git-ignored and never committed.
 
-- **Build command:** `npm run build`
-- **Build output directory:** `out`
-- **Node version:** `20`
+No repository secret is needed. The workflow authenticates to Pages with the built-in
+`GITHUB_TOKEN` via OIDC (`id-token: write`).
 
-### 2. Create a Cloudflare API token
+### 2. The custom domain
 
-**My Profile → API Tokens → Create Token → Custom token**
+**Repository → Settings → Pages → Custom domain:**
 
-- Permissions: `Account` → `Cloudflare Pages` → **Edit**
-- Account Resources: include your account
+```
+shikshyatechhub.bikashkadayat.com.np
+```
 
-Copy the token — it is shown only once. Your **Account ID** is on the right-hand side of the
-Cloudflare dashboard overview page.
+Tick **Enforce HTTPS** once the certificate has been issued.
 
-### 3. Add the GitHub secrets
+The domain is also stored in two files, both containing exactly that one line with no scheme,
+no trailing slash and no trailing newline:
 
-**Repository → Settings → Secrets and variables → Actions → New repository secret**
+| File          | Purpose                                                            |
+| ------------- | ------------------------------------------------------------------ |
+| `CNAME`       | Repository root copy                                                |
+| `public/CNAME`| Copied to `out/CNAME` by `next build`, so it ships in the artifact  |
 
-| Secret name             | Value                          |
-| ----------------------- | ------------------------------ |
-| `CLOUDFLARE_API_TOKEN`  | the token from step 2          |
-| `CLOUDFLARE_ACCOUNT_ID` | your Cloudflare account ID     |
+The matching Cloudflare DNS record (managed in the Cloudflare dashboard, **not** from this repo):
 
-Secrets are never committed to the repository — the workflow reads them from GitHub at run time.
+| Type  | Name             | Target                  |
+| ----- | ---------------- | ----------------------- |
+| CNAME | `shikshyatechhub`| `bikashkadayat.github.io` |
 
-### 4. Push
+> If you change the domain, update `CNAME`, `public/CNAME`, `siteConfig.url` in
+> `src/data/site.ts`, the verification step in `.github/workflows/pages.yml`, and the GitHub
+> Pages custom-domain setting — all five.
+
+### 3. Push
 
 ```bash
 git add .
@@ -386,15 +391,15 @@ git commit -m "Shikshya Tech Hub website"
 git push origin main
 ```
 
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) then runs on every push to `main`:
-install → typecheck → lint → build → deploy. You can also trigger it manually from the **Actions**
-tab (`workflow_dispatch`).
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml) then runs on every push to `main`:
+install → typecheck → lint → build → verify `CNAME` → upload artifact → deploy. You can also
+trigger it manually from the **Actions** tab (`workflow_dispatch`).
 
-### Custom domain
+### A note on `public/_headers`
 
-1. **Pages project → Custom domains → Set up a custom domain.**
-2. Update `siteConfig.url` in `src/data/site.ts` to the new domain and push, so canonical URLs,
-   OpenGraph tags and the sitemap point at the right place.
+That file is Cloudflare Pages syntax. GitHub Pages ignores it, so the cache and security headers
+it declares are **not** applied to the live site. GitHub Pages does not support custom headers at
+all; if you need them, set them as Transform Rules on the Cloudflare proxy in front of the domain.
 
 ---
 

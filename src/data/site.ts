@@ -17,9 +17,10 @@ export const siteConfig = {
     'Shikshya Tech Hub is a practical technology education platform for students, schools and colleges — hands-on courses, school workshops and project-based learning in AI, development, design, cybersecurity and robotics.',
   /**
    * Used for canonical URLs, OpenGraph tags and the sitemap.
-   * EDIT ME after you attach your custom domain in Cloudflare.
+   * Must match the custom domain configured in GitHub Pages and in
+   * `public/CNAME` — no trailing slash.
    */
-  url: 'https://shikshya-tech-hub.pages.dev',
+  url: 'https://shikshyatechhub.bikashkadayat.com.np',
   locale: 'en_NP',
 } as const;
 
