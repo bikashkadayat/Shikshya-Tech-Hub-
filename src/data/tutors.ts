@@ -81,12 +81,12 @@ export const tutors: Tutor[] = [
       'AI Tools',
     ],
     highlights: [
-      'Tutor at Shikshya Tech Hub',
+      'Tutor at Sikshya Tech Hub',
       '400+ students reached through digital literacy and awareness programs',
       'Participant in APNIC networking and Internet infrastructure training',
     ],
     bio: [
-      'Bikash Kadayat is a Technology Specialist, Digital Literacy Trainer and Technology Educator with over 3 years of experience in technology, digital education and community-focused initiatives. He is currently pursuing a Bachelor of Science in Computer Science and Information Technology (BSc CSIT) and works as a Tutor at Shikshya Tech Hub.',
+      'Bikash Kadayat is a Technology Specialist, Digital Literacy Trainer and Technology Educator with over 3 years of experience in technology, digital education and community-focused initiatives. He is currently pursuing a Bachelor of Science in Computer Science and Information Technology (BSc CSIT) and works as a Tutor at Sikshya Tech Hub.',
       'He has trained and engaged with more than 400 students through digital literacy and awareness programs, helping learners develop practical knowledge of computers, Internet safety, cybersecurity awareness and the responsible use of digital technologies.',
       'He has also participated in networking and Internet infrastructure training programs conducted by the Asia Pacific Network Information Centre (APNIC).',
       'Bikash is passionate about digital education, Internet technologies, cybersecurity awareness, and empowering young people through practical and accessible technology.',
@@ -107,7 +107,7 @@ export const tutors: Tutor[] = [
     imagePosition: 'center 45%',
     roles: ['AI & Machine Learning Specialist'],
     specialisation: 'Artificial Intelligence · Machine Learning · Intelligent Systems',
-    education: "Bachelor's degree in Computer Science",
+    education: 'Computer Engineering',
     experience: '2+ years',
     skills: [
       'Artificial Intelligence (AI)',

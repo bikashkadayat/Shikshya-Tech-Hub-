@@ -9,7 +9,7 @@ import { getProgramImage } from '@/data/programGallery';
  * Home page editorial block pairing the programme photograph with general
  * copy about how the teaching works.
  *
- * The copy is deliberately about Shikshya Tech Hub's approach, not about the
+ * The copy is deliberately about Sikshya Tech Hub's approach, not about the
  * people, event, institution or date in the photograph — none of which is
  * verified in this repository.
  */

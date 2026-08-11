@@ -12,10 +12,10 @@ import { publishedTutors, tutors } from '@/data/tutors';
 export const metadata: Metadata = {
   title: 'Tutors',
   description:
-    'Meet the technology tutors at Shikshya Tech Hub. Profiles that are still marked as editable are placeholders, not real people.',
+    'Meet the technology tutors at Sikshya Tech Hub. Profiles that are still marked as editable are placeholders, not real people.',
   alternates: { canonical: '/tutors' },
   openGraph: {
-    title: 'Meet Our Technology Tutors | Shikshya Tech Hub',
+    title: 'Meet Our Technology Tutors | Sikshya Tech Hub',
     description: 'The people who teach our technology courses and workshops.',
     url: '/tutors',
   },
@@ -50,7 +50,7 @@ export default function TutorsPage() {
           subtitle={
             hasPlaceholders
               ? `${publishedTutors.length} published profiles, and open slots ready for the tutors who join next.`
-              : `${publishedTutors.length} published profiles — every one of them teaching at Shikshya Tech Hub.`
+              : `${publishedTutors.length} published profiles — every one of them teaching at Sikshya Tech Hub.`
           }
         />
 

@@ -5,6 +5,7 @@ import { AlertCircle, Loader2, Send } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { contactDetails, formSubmitAction } from '@/data/contact';
 import { getCourseTitles } from '@/data/courses';
+import { siteConfig } from '@/data/site';
 import { cn } from '@/lib/utils';
 
 /* -------------------------------------------------------------------------- */
@@ -188,7 +189,7 @@ export function ContactForm() {
       className="rounded-card border border-line bg-white p-6 shadow-soft sm:p-8"
     >
       {/* FormSubmit configuration — no secrets, all public settings. */}
-      <input type="hidden" name="_subject" value="New Shikshya Tech Hub Website Inquiry" />
+      <input type="hidden" name="_subject" value={`New ${siteConfig.name} Website Inquiry`} />
       <input type="hidden" name="_template" value="table" />
       <input type="hidden" name="_captcha" value="true" />
       {/* Honeypot: bots fill it, people never see it. */}
@@ -217,7 +218,7 @@ export function ContactForm() {
             We could not send your inquiry. Please try again or email us directly at{' '}
             <a
               href={`mailto:${contactDetails.email}`}
-              aria-label="Email Shikshya Tech Hub"
+              aria-label={`Email ${siteConfig.name}`}
               className="font-semibold underline underline-offset-2 hover:no-underline"
             >
               {contactDetails.email}
@@ -361,7 +362,7 @@ export function ContactForm() {
         Prefer not to use the form? Email{' '}
         <a
           href={`mailto:${contactDetails.email}`}
-          aria-label="Email Shikshya Tech Hub"
+          aria-label={`Email ${siteConfig.name}`}
           className="font-semibold text-electric hover:underline"
         >
           {contactDetails.email}
@@ -372,7 +373,7 @@ export function ContactForm() {
             {index > 0 ? ' or ' : ''}
             <a
               href={phone.href}
-              aria-label={`Call Shikshya Tech Hub at ${phone.display}`}
+              aria-label={`Call ${siteConfig.name} at ${phone.display}`}
               className="font-semibold text-electric hover:underline"
             >
               {phone.display}

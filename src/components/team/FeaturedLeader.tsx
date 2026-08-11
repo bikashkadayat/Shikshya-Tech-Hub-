@@ -54,7 +54,7 @@ export function FeaturedLeader({ leader = executiveLeader }: { leader?: TeamMemb
 
               <div className="flex max-w-[68ch] flex-col gap-4">
                 <p className="t-body text-muted">
-                  At Shikshya Tech Hub, leadership is focused on creating a practical, accessible,
+                  At Sikshya Tech Hub, leadership is focused on creating a practical, accessible,
                   and supportive environment for technology learning.
                 </p>
                 <p className="t-body text-muted">

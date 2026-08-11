@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     'Hands-on technology workshops for schools and colleges — AI Awareness, Cyber Safety, Build Your First Website, Introduction to Robotics, Digital Content Creation, Prompt Engineering and Digital Marketing Basics.',
   alternates: { canonical: '/workshops' },
   openGraph: {
-    title: 'Hands-On Technology Workshops | Shikshya Tech Hub',
+    title: 'Hands-On Technology Workshops | Sikshya Tech Hub',
     description:
       'Short, practical workshops delivered at your school or college — students build something in every session.',
     url: '/workshops',

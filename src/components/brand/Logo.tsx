@@ -1,7 +1,8 @@
+import { siteConfig } from '@/data/site';
 import { cn } from '@/lib/utils';
 
 /**
- * Shikshya Tech Hub wordmark.
+ * Sikshya Tech Hub wordmark.
  *
  * ---------------------------------------------------------------------------
  * USING YOUR REAL LOGO FILE
@@ -39,7 +40,7 @@ export function Logo({ height = 34, variant = 'light', className }: LogoProps) {
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={isDark ? '/logo-white.png' : '/logo.png'}
-        alt="Shikshya Tech Hub"
+        alt={siteConfig.name}
         width={Math.round(height * LOGO_ASPECT)}
         height={height}
         className={cn('w-auto', className)}
@@ -56,7 +57,7 @@ export function Logo({ height = 34, variant = 'light', className }: LogoProps) {
       className={cn('inline-flex flex-col justify-center leading-none select-none', className)}
       style={{ height }}
       role="img"
-      aria-label="Shikshya Tech Hub"
+      aria-label={siteConfig.name}
     >
       {/* --- SIKSHYA + graduation cap ------------------------------------ */}
       <span

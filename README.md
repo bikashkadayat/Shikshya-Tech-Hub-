@@ -1,6 +1,6 @@
-# Shikshya Tech Hub — Website
+# Sikshya Tech Hub — Website
 
-The production frontend for **Shikshya Tech Hub**, a practical technology education platform for
+The production frontend for **Sikshya Tech Hub**, a practical technology education platform for
 students, schools and colleges.
 
 Built as a **fully static site** — no backend, no database, no authentication, no API. Everything
@@ -313,7 +313,7 @@ page to draw its challenge, so an AJAX POST would lose spam protection. The brow
 FormSubmit's confirmation page, which is also why the app never claims delivery itself.
 
 Fields arrive in the email as **Full Name, Email, Phone, School or Organization, Interested Course,
-Message**, under the subject *New Shikshya Tech Hub Website Inquiry*.
+Message**, under the subject *New Sikshya Tech Hub Website Inquiry*.
 
 ### Activating it (once, after the first deploy)
 
@@ -387,7 +387,7 @@ The matching Cloudflare DNS record (managed in the Cloudflare dashboard, **not**
 
 ```bash
 git add .
-git commit -m "Shikshya Tech Hub website"
+git commit -m "Sikshya Tech Hub website"
 git push origin main
 ```
 
@@ -407,7 +407,7 @@ all; if you need them, set them as Transform Rules on the Cloudflare proxy in fr
 
 Already implemented:
 
-- Unique `<title>` and description on every page, with a `%s | Shikshya Tech Hub` template
+- Unique `<title>` and description on every page, with a `%s | Sikshya Tech Hub` template
 - OpenGraph + Twitter card metadata, and a branded `og.png` share image
 - Canonical URLs per page
 - `robots.txt` and `sitemap.xml` generated at build time (course pages included)

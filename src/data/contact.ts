@@ -1,9 +1,10 @@
 import type { IconName } from '@/lib/icons';
+import { siteConfig } from './site';
 
 /**
  * Official contact details — the single source of truth.
  *
- * Everything the site shows about how to reach Shikshya Tech Hub comes from
+ * Everything the site shows about how to reach Sikshya Tech Hub comes from
  * here: the contact page cards, the home page contact block and the inquiry
  * form's fallback links. Change a value once and it updates everywhere.
  *
@@ -49,7 +50,7 @@ export const contactCards: ContactCard[] = [
       {
         display: contactDetails.email,
         href: `mailto:${contactDetails.email}`,
-        ariaLabel: 'Email Shikshya Tech Hub',
+        ariaLabel: `Email ${siteConfig.name}`,
       },
     ],
   },
@@ -59,7 +60,7 @@ export const contactCards: ContactCard[] = [
     entries: contactDetails.phones.map((phone) => ({
       display: phone.display,
       href: phone.href,
-      ariaLabel: `Call Shikshya Tech Hub at ${phone.display}`,
+      ariaLabel: `Call ${siteConfig.name} at ${phone.display}`,
     })),
   },
   {

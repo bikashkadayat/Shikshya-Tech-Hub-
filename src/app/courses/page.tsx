@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     'Explore nine practical technology courses — AI & Machine Learning, Web and App Development, Video Editing, Graphic Design, Prompt Engineering, Digital Marketing, Cyber Security and Robotics.',
   alternates: { canonical: '/courses' },
   openGraph: {
-    title: 'Practical Technology Courses | Shikshya Tech Hub',
+    title: 'Practical Technology Courses | Sikshya Tech Hub',
     description:
       'Nine hands-on technology courses for school and college students, each one project-based from the first session.',
     url: '/courses',

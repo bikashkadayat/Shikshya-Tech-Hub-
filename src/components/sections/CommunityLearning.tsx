@@ -15,7 +15,7 @@ import { getProgramImage } from '@/data/programGallery';
  * short feature points. Two editorial image sections on one page would read as
  * a template repeat if they shared a layout.
  *
- * The copy describes how Shikshya Tech Hub works. It says nothing about the
+ * The copy describes how Sikshya Tech Hub works. It says nothing about the
  * institution, event, date, location or people in the photograph — none of
  * that is verified in this repository, and none of it is inferred from the
  * image.

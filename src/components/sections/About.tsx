@@ -12,7 +12,7 @@ export function About() {
         {/* Left: heading + copy */}
         <div className="flex flex-col gap-6 lg:pt-2">
           <SectionHeading
-            eyebrow="About Shikshya"
+            eyebrow="About Sikshya"
             title={
               <>
                 Technology Education

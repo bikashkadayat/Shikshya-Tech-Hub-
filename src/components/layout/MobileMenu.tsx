@@ -6,7 +6,7 @@ import { ChevronRight, X } from 'lucide-react';
 import { Logo } from '@/components/brand/Logo';
 import { SocialIcon } from '@/components/brand/SocialIcon';
 import { Button } from '@/components/ui/Button';
-import { navItems, socialLinks } from '@/data/site';
+import { navItems, siteConfig, socialLinks } from '@/data/site';
 import { cn } from '@/lib/utils';
 
 /**
@@ -115,7 +115,7 @@ export function MobileMenu({
         )}
       >
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
-          <Link href="/" onClick={onClose} aria-label="Shikshya Tech Hub — home">
+          <Link href="/" onClick={onClose} aria-label={`${siteConfig.name} — home`}>
             <Logo height={32} />
           </Link>
 

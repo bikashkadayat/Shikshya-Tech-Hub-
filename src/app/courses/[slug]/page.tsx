@@ -31,13 +31,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     alternates: { canonical: `/courses/${course.slug}` },
     openGraph: {
-      title: `${course.title} | Shikshya Tech Hub`,
+      title: `${course.title} | Sikshya Tech Hub`,
       description,
       url: `/courses/${course.slug}`,
       type: 'article',
     },
     twitter: {
-      title: `${course.title} | Shikshya Tech Hub`,
+      title: `${course.title} | Sikshya Tech Hub`,
       description,
     },
   };

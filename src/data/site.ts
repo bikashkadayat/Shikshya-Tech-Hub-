@@ -10,11 +10,11 @@ import type { IconName } from '@/lib/icons';
  */
 
 export const siteConfig = {
-  name: 'Shikshya Tech Hub',
-  shortName: 'Shikshya',
+  name: 'Sikshya Tech Hub',
+  shortName: 'Sikshya',
   tagline: 'Learn Technology. Build Skills. Create the Future.',
   description:
-    'Shikshya Tech Hub is a practical technology education platform for students, schools and colleges — hands-on courses, school workshops and project-based learning in AI, development, design, cybersecurity and robotics.',
+    'Sikshya Tech Hub is a practical technology education platform for students, schools and colleges — hands-on courses, school workshops and project-based learning in AI, development, design, cybersecurity and robotics.',
   /**
    * Used for canonical URLs, OpenGraph tags and the sitemap.
    * Must match the custom domain configured in GitHub Pages and in

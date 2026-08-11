@@ -10,12 +10,12 @@ import { coreTeam } from '@/data/team';
 export const metadata: Metadata = {
   title: 'Our Team',
   description:
-    'Meet the leadership and core team supporting Shikshya Tech Hub’s learning, operations, technical direction, finance, marketing, workforce management, human resources, and logistics.',
+    'Meet the leadership and core team supporting Sikshya Tech Hub’s learning, operations, technical direction, finance, marketing, workforce management, human resources, and logistics.',
   alternates: { canonical: '/our-team' },
   openGraph: {
-    title: 'Our Team | Shikshya Tech Hub',
+    title: 'Our Team | Sikshya Tech Hub',
     description:
-      'The leadership and core team behind Shikshya Tech Hub’s learning programs and day-to-day activities.',
+      'The leadership and core team behind Sikshya Tech Hub’s learning programs and day-to-day activities.',
     url: '/our-team',
   },
 };
@@ -25,8 +25,8 @@ export default function OurTeamPage() {
     <>
       <PageHero
         eyebrow="Our Team"
-        title="Meet the Team Behind Shikshya Tech Hub"
-        description="Meet the people contributing to the leadership, operations, technical direction, finance, marketing, workforce management, human resources, and logistics of Shikshya Tech Hub."
+        title="Meet the Team Behind Sikshya Tech Hub"
+        description="Meet the people contributing to the leadership, operations, technical direction, finance, marketing, workforce management, human resources, and logistics of Sikshya Tech Hub."
         breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Our Team' }]}
       />
 
@@ -38,7 +38,7 @@ export default function OurTeamPage() {
         <SectionHeading
           eyebrow="Team Members"
           title="Our Core Team"
-          subtitle="Our team works across key organizational functions to support the learning programs and day-to-day activities of Shikshya Tech Hub."
+          subtitle="Our team works across key organizational functions to support the learning programs and day-to-day activities of Sikshya Tech Hub."
         />
 
         {/* One per row on phones, two from 640px, four only from 1280px. At

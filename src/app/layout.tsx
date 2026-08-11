@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     'web development course',
     'robotics for schools',
     'cyber security awareness',
-    'Shikshya Tech Hub',
+    'Sikshya Tech Hub',
   ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,

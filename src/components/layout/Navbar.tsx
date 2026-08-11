@@ -8,7 +8,7 @@ import { Logo } from '@/components/brand/Logo';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { MobileMenu } from './MobileMenu';
-import { navItems, type NavItem } from '@/data/site';
+import { navItems, siteConfig, type NavItem } from '@/data/site';
 import { cn } from '@/lib/utils';
 
 export function Navbar() {
@@ -53,7 +53,7 @@ export function Navbar() {
         )}
       >
         <Container className="flex h-[72px] items-center justify-between gap-4 lg:h-[78px]">
-          <Link href="/" aria-label="Shikshya Tech Hub — home" className="shrink-0">
+          <Link href="/" aria-label={`${siteConfig.name} — home`} className="shrink-0">
             <Logo height={34} />
           </Link>
 

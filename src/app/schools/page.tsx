@@ -14,10 +14,10 @@ import { partnershipProcess, schoolBenefits } from '@/data/content';
 export const metadata: Metadata = {
   title: 'Schools & Institutions',
   description:
-    'Partner with Shikshya Tech Hub to bring future-ready technology education to your school or college — customized courses, on-site workshops, practical projects, assessments and certificates.',
+    'Partner with Sikshya Tech Hub to bring future-ready technology education to your school or college — customized courses, on-site workshops, practical projects, assessments and certificates.',
   alternates: { canonical: '/schools' },
   openGraph: {
-    title: 'For Schools & Institutions | Shikshya Tech Hub',
+    title: 'For Schools & Institutions | Sikshya Tech Hub',
     description:
       'Customized technology courses and on-site workshops, designed with your team and delivered around your academic calendar.',
     url: '/schools',

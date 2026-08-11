@@ -12,10 +12,10 @@ import { socialLinks } from '@/data/site';
 export const metadata: Metadata = {
   title: 'Contact',
   description:
-    'Get in touch with Shikshya Tech Hub about courses, workshops or a technology programme for your school or college.',
+    'Get in touch with Sikshya Tech Hub about courses, workshops or a technology programme for your school or college.',
   alternates: { canonical: '/contact' },
   openGraph: {
-    title: "Let's Build the Future Together | Shikshya Tech Hub",
+    title: "Let's Build the Future Together | Sikshya Tech Hub",
     description:
       'Contact us about courses, workshops, or running a technology programme at your institution.',
     url: '/contact',

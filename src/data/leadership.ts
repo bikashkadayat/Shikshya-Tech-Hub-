@@ -32,14 +32,14 @@ export type LeadershipMessage = {
 export const ceoMessage: LeadershipMessage = {
   name: 'APIL Kunwar',
   position: 'CEO',
-  organization: 'Shikshya Tech Hub',
+  organization: 'Sikshya Tech Hub',
   image: '/images/leadership/apil-kunwar-ceo.jpeg',
   imageAlt: 'Portrait accompanying the message from APIL Kunwar',
   imagePosition: 'center',
   heading: 'Message from the CEO',
   message: [
-    'At Shikshya Tech Hub, we believe that meaningful education should connect knowledge with practical experience. Our goal is to create an accessible learning environment where students can explore technology, strengthen their skills, and develop the confidence to apply what they learn.',
+    'At Sikshya Tech Hub, we believe that meaningful education should connect knowledge with practical experience. Our goal is to create an accessible learning environment where students can explore technology, strengthen their skills, and develop the confidence to apply what they learn.',
     'Through our courses, workshops, and learning initiatives, we aim to make technical education clear, engaging, and relevant. We are committed to supporting learners at different stages of their journey while encouraging curiosity, responsible use of technology, collaboration, and continuous improvement.',
-    'I welcome students, parents, schools, educators, and community partners to connect with Shikshya Tech Hub. Together, we can help learners build practical capabilities and prepare for opportunities in an increasingly digital world.',
+    'I welcome students, parents, schools, educators, and community partners to connect with Sikshya Tech Hub. Together, we can help learners build practical capabilities and prepare for opportunities in an increasingly digital world.',
   ],
 };

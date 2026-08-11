@@ -30,7 +30,7 @@ export type DurationUnit = 'hours' | 'days' | 'weeks' | 'months';
  * How long a course runs.
  *
  * `status` is the honest part:
- * - `'confirmed'` — the schedule was supplied by Shikshya Tech Hub.
+ * - `'confirmed'` — the schedule was supplied by Sikshya Tech Hub.
  * - `'proposed'`  — a planning estimate sized from the course content in this
  *   file. The UI labels these as a suggested duration so no visitor reads an
  *   estimate as a committed timetable.

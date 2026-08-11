@@ -75,7 +75,7 @@ export function Hero() {
             </h1>
 
             <p className="t-body max-w-xl text-muted">
-              Shikshya Tech Hub teaches practical, future-ready technology skills to school and
+              Sikshya Tech Hub teaches practical, future-ready technology skills to school and
               college students — and partners with institutions to run courses and workshops on
               site. Every course is hands-on, and every student finishes something they built.
             </p>
