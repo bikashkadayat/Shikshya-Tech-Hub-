@@ -24,7 +24,7 @@ export function LearningInAction() {
           <SectionHeading
             eyebrow="Learning in Action"
             title="Practical Learning Beyond the Classroom"
-            subtitle="Our programs are designed to encourage participation, practical exploration, and the confident use of technology."
+            subtitle="Students take part directly in every session, try things out for themselves, and grow more confident with the tools."
           />
 
           <ArrowLink href="/workshops">See How Workshops Run</ArrowLink>

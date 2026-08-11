@@ -14,7 +14,7 @@ export const siteConfig = {
   shortName: 'Sikshya',
   tagline: 'Learn Technology. Build Skills. Create the Future.',
   description:
-    'Sikshya Tech Hub is a practical technology education platform for students, schools and colleges — hands-on courses, school workshops and project-based learning in AI, development, design, cybersecurity and robotics.',
+    'Sikshya Tech Hub teaches technology to students, schools and colleges through hands-on courses, school workshops and project work in AI, development, design, cybersecurity and robotics.',
   /**
    * Used for canonical URLs, OpenGraph tags and the sitemap.
    * Must match the custom domain configured in GitHub Pages and in
@@ -26,7 +26,7 @@ export const siteConfig = {
 
 /** The one-line promise used under the logo in the footer. */
 export const brandStatement =
-  'Technology is not difficult — it is something students can learn, experiment with, and build.';
+  'Technology is not difficult. It is something students can learn, experiment with, and build.';
 
 /* -------------------------------------------------------------------------- */
 /* Navigation                                                                  */

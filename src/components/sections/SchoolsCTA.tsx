@@ -27,7 +27,7 @@ export function SchoolsCTA() {
               </h2>
 
               <p className="t-body mt-4 max-w-xl text-white/85">
-                We design and deliver technology courses and workshops on site — shaped around your
+                We design and deliver technology courses and workshops on site, shaped around your
                 students, your subjects and your academic calendar.
               </p>
 

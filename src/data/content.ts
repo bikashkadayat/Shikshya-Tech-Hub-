@@ -24,7 +24,7 @@ export const aboutPillars: { number: string; title: string; description: string;
       number: '03',
       title: 'Create',
       description:
-        'Every course ends in something built and finished — a project students can show, explain and be proud of.',
+        'Every course ends in something built and finished. Students leave with a project they can show and explain.',
       icon: 'rocket',
     },
   ];
@@ -49,7 +49,7 @@ export const whyUsFeatures: { title: string; description: string; icon: IconName
   {
     title: 'Built for Students',
     description:
-      'Pacing, examples and language are pitched at school and college students — clear enough to follow, real enough to matter.',
+      'Pacing, examples and language are pitched at school and college students, clear enough to follow and real enough to matter.',
     icon: 'graduation',
   },
   {
@@ -197,12 +197,12 @@ export const homeFaqs: { question: string; answer: string }[] = [
   {
     question: 'Who are these courses for?',
     answer:
-      'School and college students, and schools or institutions that want to run technology programmes for their students. Most courses assume no prior experience — the level shown on each course tells you where it finishes, not where you need to start.',
+      'School and college students, and schools or institutions that want to run technology programmes for their students. Most courses assume no prior experience. The level shown on each course tells you where it finishes, not where you need to start.',
   },
   {
     question: 'Do students need prior technical experience?',
     answer:
-      'For most courses, no. Anything that does expect a background — App Development, for example — says so on its course page, and there is usually a course that leads into it.',
+      'For most courses, no. Anything that does expect a background, such as App Development, says so on its course page, and there is usually a course that leads into it.',
   },
   {
     question: 'Can courses be delivered at our school or college?',
@@ -216,7 +216,7 @@ export const homeFaqs: { question: string; answer: string }[] = [
   },
   {
     question: 'Do students receive a certificate?',
-    answer: 'Yes — a certificate is issued on completion of a course or programme.',
+    answer: 'Yes. A certificate is issued on completion of a course or programme.',
   },
   {
     question: 'How do I enrol or request a workshop?',

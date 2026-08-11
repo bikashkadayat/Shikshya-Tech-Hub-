@@ -58,7 +58,7 @@ export function TutorProfile({ tutor }: { tutor: Tutor }) {
                     </a>
                   ) : (
                     <span
-                      title={`${label} — add a link in src/data/tutors.ts`}
+                      title={`${label}: add a link in src/data/tutors.ts`}
                       className="flex size-10 items-center justify-center rounded-full border border-dashed border-line text-muted/40"
                     >
                       <SocialIcon name={network} className="size-[18px]" />

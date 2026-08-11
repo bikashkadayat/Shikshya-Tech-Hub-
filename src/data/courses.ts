@@ -111,7 +111,7 @@ export const courses: Course[] = [
     projects: 4,
     certificate: 'On completion',
     overview: [
-      'This course takes students from "AI is magic" to "I built one". We start with what machine learning actually is — a program that finds patterns in data instead of following rules someone typed in — and then work upward through real, runnable projects.',
+      'This course takes students from "AI is magic" to "I built one". We start with what machine learning actually is, a program that finds patterns in data instead of following rules someone typed in, and then work upward through real, runnable projects.',
       'Everything is taught hands-on in Python. Students train their own models, look at where the models get things wrong, and learn to explain their results in plain language. No prior machine learning experience is expected; comfort with basic programming and school-level mathematics is enough to keep up.',
     ],
     learn: [
@@ -169,7 +169,7 @@ export const courses: Course[] = [
       {
         question: 'Do I need to know programming before I start?',
         answer:
-          'Some basic programming helps, but it is not a hard requirement. The course begins with the Python you need for data work, and students who have written any code before — in any language — usually pick it up quickly.',
+          'Some basic programming helps, but it is not a hard requirement. The course begins with the Python you need for data work, and students who have written any code before, in any language, usually pick it up quickly.',
       },
       {
         question: 'How much mathematics is involved?',
@@ -196,7 +196,7 @@ export const courses: Course[] = [
     level: 'Beginner',
     icon: 'video',
     summary:
-      'Turn raw footage into clean, watchable video — cutting, sound, colour and export, from scratch.',
+      'Turn raw footage into clean, watchable video. Cutting, sound, colour and export, all from scratch.',
     duration: { value: 4, unit: 'weeks', label: '4 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
@@ -266,19 +266,19 @@ export const courses: Course[] = [
     level: 'Beginner',
     icon: 'chat',
     summary:
-      'Learn to work with AI tools properly — writing prompts that produce useful, reliable, honest results.',
+      'Work with AI tools properly by writing prompts that produce useful, reliable, honest results.',
     duration: { value: 3, unit: 'weeks', label: '3 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
       'AI tools respond to how you ask. This course teaches students to move past one-line questions and into structured prompting: giving context, setting constraints, asking for a format, and iterating when the first answer is not good enough.',
-      'It also covers the part that matters most for students — checking the output. We spend real time on verifying claims, spotting confident-sounding mistakes, and using AI as an assistant for schoolwork rather than a shortcut around it.',
+      'It also covers the part that matters most for students, which is checking the output. We spend real time on verifying claims, spotting confident-sounding mistakes, and using AI as an assistant for schoolwork rather than a shortcut around it.',
     ],
     learn: [
       'How large language models generate text, at a useful level of detail',
       'The anatomy of a good prompt: context, task, constraints, format',
       'Role prompting and giving the model a clear job',
-      'Few-shot prompting — teaching by example',
+      'Few-shot prompting, or teaching by example',
       'Step-by-step reasoning prompts for harder problems',
       'Iterating and refining instead of accepting the first answer',
       'Recognising hallucinations and verifying what you are told',
@@ -336,7 +336,7 @@ export const courses: Course[] = [
     level: 'Beginner',
     icon: 'chart',
     summary:
-      'Understand how brands grow online — content, social platforms, search and reading the numbers.',
+      'Understand how brands grow online through content, social platforms, search and the numbers behind them.',
     duration: { value: 4, unit: 'weeks', label: '4 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
@@ -408,12 +408,12 @@ export const courses: Course[] = [
     level: 'Beginner',
     icon: 'pen',
     summary:
-      'Learn the rules behind good design — layout, type, colour and visual hierarchy — then use them.',
+      'Learn the rules behind good design, from layout and type to colour and visual hierarchy, then use them.',
     duration: { value: 4, unit: 'weeks', label: '4 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
-      'Good design is not taste, it is decisions. This course teaches the underlying rules — hierarchy, alignment, contrast, spacing, colour relationships and type pairing — so students stop guessing at why something looks wrong.',
+      'Good design is not taste, it is decisions. This course teaches the underlying rules of hierarchy, alignment, contrast, spacing, colour relationships and type pairing, so students stop guessing at why something looks wrong.',
       'Every principle is applied immediately to real briefs: a poster, a logo, a social set and a small brand system. Students finish with work they can show, not just theory they can recite.',
     ],
     learn: [
@@ -473,7 +473,7 @@ export const courses: Course[] = [
     level: 'Beginner–Intermediate',
     icon: 'code',
     summary:
-      'Build real websites from the ground up — HTML, CSS and JavaScript, then publish them live.',
+      'Build real websites from the ground up with HTML, CSS and JavaScript, then publish them live.',
     duration: { value: 6, unit: 'weeks', label: '6 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
@@ -544,13 +544,13 @@ export const courses: Course[] = [
     level: 'Intermediate',
     icon: 'smartphone',
     summary:
-      'Design, build and run your own mobile app — screens, navigation, data and device features.',
+      'Design, build and run your own mobile app, covering screens, navigation, data and device features.',
     duration: { value: 8, unit: 'weeks', label: '8 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
     overview: [
       'This course takes students from an idea to an app running on an actual phone. It covers how mobile apps are structured, how screens connect, how state is managed, and how data survives being closed and reopened.',
-      'Some prior programming experience makes this much smoother — the web development course is a natural route in. Students finish with apps installed on their own devices.',
+      'Some prior programming experience makes this much smoother, and the web development course is a natural route in. Students finish with apps installed on their own devices.',
     ],
     learn: [
       'How mobile apps are structured and how they differ from websites',
@@ -620,7 +620,7 @@ export const courses: Course[] = [
     projects: 4,
     certificate: 'On completion',
     overview: [
-      'Security makes sense once you see it from both sides. This course explains how common attacks work — phishing, weak passwords, unsafe networks, social engineering — and then how each one is defended against.',
+      'Security makes sense once you see it from both sides. This course explains how common attacks work, including phishing, weak passwords, unsafe networks and social engineering, and then how each one is defended against.',
       'The framing is defensive throughout. Students learn to secure their own accounts and devices, recognise a scam before clicking, and think clearly about privacy and their digital footprint. It runs at all levels because the fundamentals matter to everyone.',
     ],
     learn: [
@@ -675,7 +675,7 @@ export const courses: Course[] = [
       {
         question: 'Why is this listed as all levels?',
         answer:
-          'The fundamentals are genuinely useful to everyone, and the material scales — younger students focus on safe habits while advanced students go deeper into the technical side.',
+          'The fundamentals are genuinely useful to everyone, and the material scales. Younger students focus on safe habits while advanced students go deeper into the technical side.',
       },
       {
         question: 'Is this appropriate for school students?',
@@ -692,7 +692,7 @@ export const courses: Course[] = [
     level: 'Beginner–Intermediate',
     icon: 'robot',
     summary:
-      'Build and program machines that sense and react — electronics, sensors, motors and code together.',
+      'Build and program machines that sense and react, bringing electronics, sensors, motors and code together.',
     duration: { value: 6, unit: 'weeks', label: '6 Weeks', status: 'proposed' },
     projects: 4,
     certificate: 'On completion',
@@ -748,7 +748,7 @@ export const courses: Course[] = [
       {
         question: 'Is equipment provided?',
         answer:
-          'Component kits are part of how the course is delivered. Exact arrangements are agreed per batch or per school — get in touch and we will confirm what is included.',
+          'Component kits are part of how the course is delivered. Exact arrangements are agreed per batch or per school, so get in touch and we will confirm what is included.',
       },
       {
         question: 'Do students need programming experience?',

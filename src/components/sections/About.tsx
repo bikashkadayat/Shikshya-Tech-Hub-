@@ -23,9 +23,9 @@ export function About() {
           />
 
           <p className="t-body max-w-xl text-muted">
-            Technology is not difficult — it is something students can learn, experiment with, and
-            build. We teach it that way: concepts explained plainly, tools used first-hand, and a
-            finished project at the end of every course.
+            Technology is not difficult. It is something students can learn, experiment with and
+            build, and we teach it that way. Concepts are explained plainly, students use the tools
+            themselves, and every course ends with a finished project.
           </p>
 
           <p className="t-body max-w-xl text-muted">

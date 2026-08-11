@@ -118,7 +118,7 @@ export const tutors: Tutor[] = [
       'Emerging AI Technologies',
     ],
     highlights: [
-      "Bachelor's degree in Computer Science — completed",
+      "Completed a Bachelor's degree in Computer Science",
       '2+ years of professional experience in Artificial Intelligence and Machine Learning',
     ],
     bio: [
@@ -152,7 +152,7 @@ export const tutors: Tutor[] = [
       'Modern Web Technologies',
     ],
     highlights: [
-      'Diploma in Computer Engineering — completed',
+      'Completed a Diploma in Computer Engineering',
       '3+ years of professional experience in web development',
     ],
     bio: [
@@ -222,7 +222,7 @@ export const tutors: Tutor[] = [
       'Responsible Technology Use',
     ],
     highlights: [
-      "Bachelor's degree in Information Technology (BIT) — completed",
+      "Completed a Bachelor's degree in Information Technology (BIT)",
       '5+ years of professional experience in cybersecurity and prompt engineering',
     ],
     bio: [
@@ -256,7 +256,7 @@ export const tutors: Tutor[] = [
       'Practical Technology Applications',
     ],
     highlights: [
-      "Bachelor's degree in Information Technology (BIT) — completed",
+      "Completed a Bachelor's degree in Information Technology (BIT)",
       '2+ years of experience in Robotics',
       'Hands-on experience in robotics projects and technology-based problem solving',
     ],

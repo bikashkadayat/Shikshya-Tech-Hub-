@@ -18,7 +18,7 @@ export const contactDetails = {
     { display: '9768473119', href: 'tel:+9779768473119' },
   ],
   location: 'Kathmandu, Bagmati Province, Nepal',
-  officeHours: '7:00 AM – 6:00 PM',
+  officeHours: '7:00 AM to 6:00 PM',
 } as const;
 
 /** Lead line shown above the contact cards. */

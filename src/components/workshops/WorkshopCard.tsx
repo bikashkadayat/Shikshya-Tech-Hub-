@@ -56,7 +56,7 @@ export function WorkshopCard({ workshop, className }: { workshop: Workshop; clas
             className="size-4 transition-transform duration-200 group-hover:translate-x-1"
             aria-hidden="true"
           />
-          <span className="sr-only"> — {workshop.title}</span>
+          <span className="sr-only"> for {workshop.title}</span>
         </Link>
       </div>
     </article>

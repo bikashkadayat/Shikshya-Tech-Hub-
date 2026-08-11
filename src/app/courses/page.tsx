@@ -7,7 +7,7 @@ import { SchoolsCTA } from '@/components/sections/SchoolsCTA';
 export const metadata: Metadata = {
   title: 'Courses',
   description:
-    'Explore nine practical technology courses — AI & Machine Learning, Web and App Development, Video Editing, Graphic Design, Prompt Engineering, Digital Marketing, Cyber Security and Robotics.',
+    'Explore nine technology courses covering AI and Machine Learning, Web and App Development, Video Editing, Graphic Design, Prompt Engineering, Digital Marketing, Cyber Security and Robotics.',
   alternates: { canonical: '/courses' },
   openGraph: {
     title: 'Practical Technology Courses | Sikshya Tech Hub',

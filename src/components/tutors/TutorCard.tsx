@@ -77,7 +77,7 @@ export function TutorCard({ tutor, className }: { tutor: Tutor; className?: stri
                   </a>
                 ) : (
                   <span
-                    title={`${label} — add a link in src/data/tutors.ts`}
+                    title={`${label}: add a link in src/data/tutors.ts`}
                     className="flex size-9 items-center justify-center rounded-full border border-dashed border-line text-muted/40"
                   >
                     <SocialIcon name={network} className="size-4" />
@@ -100,7 +100,7 @@ export function TutorCard({ tutor, className }: { tutor: Tutor; className?: stri
               className="size-4 transition-transform duration-200 group-hover:translate-x-1"
               aria-hidden="true"
             />
-            <span className="sr-only"> — {tutor.name}</span>
+            <span className="sr-only"> for {tutor.name}</span>
           </Link>
         )}
       </div>

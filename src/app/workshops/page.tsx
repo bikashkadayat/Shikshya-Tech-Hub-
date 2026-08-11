@@ -13,12 +13,12 @@ import { workshops } from '@/data/workshops';
 export const metadata: Metadata = {
   title: 'Workshops',
   description:
-    'Hands-on technology workshops for schools and colleges — AI Awareness, Cyber Safety, Build Your First Website, Introduction to Robotics, Digital Content Creation, Prompt Engineering and Digital Marketing Basics.',
+    'Hands-on technology workshops for schools and colleges, covering AI Awareness, Cyber Safety, Build Your First Website, Introduction to Robotics, Digital Content Creation, Prompt Engineering and Digital Marketing Basics.',
   alternates: { canonical: '/workshops' },
   openGraph: {
     title: 'Hands-On Technology Workshops | Sikshya Tech Hub',
     description:
-      'Short, practical workshops delivered at your school or college — students build something in every session.',
+      'Short workshops delivered at your school or college, where students build something in every session.',
     url: '/workshops',
   },
 };
@@ -29,7 +29,7 @@ export default function WorkshopsPage() {
       <PageHero
         eyebrow="Hands-On Workshops"
         title="Learn by Doing"
-        description="Short, focused sessions delivered at your school or college. Every workshop is practical — students use the tools themselves and finish with something they made."
+        description="Short, focused sessions delivered at your school or college. Students use the tools themselves in every workshop and finish with something they made."
         breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Workshops' }]}
         actions={
           <Button href="/contact" kind="accent" size="lg" withArrow>

@@ -13,7 +13,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)] lg:gap-8">
           {/* Brand column */}
           <div className="flex flex-col gap-5 lg:pr-8">
-            <Link href="/" aria-label={`${siteConfig.name} — home`} className="w-fit">
+            <Link href="/" aria-label={`${siteConfig.name} home`} className="w-fit">
               <Logo height={40} variant="dark" />
             </Link>
 
@@ -34,8 +34,8 @@ export function Footer() {
                     </a>
                   ) : (
                     <span
-                      aria-label={`${social.label} — link not set yet`}
-                      title={`${social.label} — add a link in src/data/site.ts`}
+                      aria-label={`${social.label} link not set yet`}
+                      title={`${social.label}: add a link in src/data/site.ts`}
                       className="flex size-10 items-center justify-center rounded-full border border-dashed border-white/20 text-onmute/60"
                     >
                       <SocialIcon name={social.icon} className="size-[18px]" />

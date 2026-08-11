@@ -32,7 +32,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Practical Technology Education`,
+    default: `${siteConfig.name}: Practical Technology Education`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -56,20 +56,20 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} — Practical Technology Education`,
+    title: `${siteConfig.name}: Practical Technology Education`,
     description: siteConfig.description,
     images: [
       {
         url: '/og.png',
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name} — Learn Technology. Build Skills. Create the Future.`,
+        alt: `${siteConfig.name}: Learn Technology. Build Skills. Create the Future.`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${siteConfig.name} — Practical Technology Education`,
+    title: `${siteConfig.name}: Practical Technology Education`,
     description: siteConfig.description,
     images: ['/og.png'],
   },

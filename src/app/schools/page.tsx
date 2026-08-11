@@ -14,7 +14,7 @@ import { partnershipProcess, schoolBenefits } from '@/data/content';
 export const metadata: Metadata = {
   title: 'Schools & Institutions',
   description:
-    'Partner with Sikshya Tech Hub to bring future-ready technology education to your school or college — customized courses, on-site workshops, practical projects, assessments and certificates.',
+    'Partner with Sikshya Tech Hub to bring technology education to your school or college, with customized courses, on-site workshops, practical projects, assessments and certificates.',
   alternates: { canonical: '/schools' },
   openGraph: {
     title: 'For Schools & Institutions | Sikshya Tech Hub',
@@ -50,7 +50,7 @@ export default function SchoolsPage() {
             <span className="g-text-cyan">to Your School</span>
           </>
         }
-        description="We design and deliver technology programmes with your team — shaped around your students, your subjects and your timetable, and taught hands-on from day one."
+        description="We design and deliver technology programmes with your team, shaped around your students, your subjects and your timetable, and taught hands-on from day one."
         breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Schools & Institutions' }]}
         actions={
           <>

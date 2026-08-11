@@ -40,7 +40,10 @@ export function CourseFilterBar({
           placeholder="Search courses…"
           autoComplete="off"
           className={cn(
-            'h-12 w-full rounded-full border border-line bg-mist pr-11 pl-11 text-[15px] text-ink',
+            'h-12 w-full rounded-full border border-line bg-mist pr-11 pl-11 text-ink',
+            // 16px on phones stops the browser zooming the page on focus; the
+            // form fields on /contact use the same pair.
+            'text-[16px] sm:text-[15px]',
             'placeholder:text-muted/80 focus:border-electric focus:bg-white focus:outline-none',
             'transition-colors',
           )}

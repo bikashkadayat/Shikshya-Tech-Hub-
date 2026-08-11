@@ -15,9 +15,9 @@ import { FAQ } from '@/components/sections/FAQ';
 import { ContactSection } from '@/components/sections/ContactSection';
 
 export const metadata: Metadata = {
-  title: 'Sikshya Tech Hub — Learn Technology. Build Skills. Create the Future.',
+  title: 'Sikshya Tech Hub: Learn Technology. Build Skills. Create the Future.',
   description:
-    'Practical, project-based technology courses and workshops for school and college students — AI, web and app development, design, digital marketing, cybersecurity and robotics.',
+    'Project-based technology courses and workshops for school and college students, covering AI, web and app development, design, digital marketing, cybersecurity and robotics.',
   alternates: { canonical: '/' },
 };
 

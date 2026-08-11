@@ -17,7 +17,7 @@ export function TutorsPreview() {
         title="Taught by People Who Build With These Tools"
         subtitle={
           showsPlaceholder
-            ? 'Profiles marked as editable are placeholders — real tutor details are added as the team grows.'
+            ? 'Profiles marked as editable are placeholders. Real tutor details are added as the team grows.'
             : 'Every detail on a tutor profile was supplied by the tutor it describes.'
         }
       >

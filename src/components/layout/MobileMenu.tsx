@@ -115,7 +115,7 @@ export function MobileMenu({
         )}
       >
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
-          <Link href="/" onClick={onClose} aria-label={`${siteConfig.name} — home`}>
+          <Link href="/" onClick={onClose} aria-label={`${siteConfig.name} home`}>
             <Logo height={32} />
           </Link>
 
@@ -181,8 +181,8 @@ export function MobileMenu({
                   </a>
                 ) : (
                   <span
-                    aria-label={`${social.label} — link not set yet`}
-                    title={`${social.label} — add a link in src/data/site.ts`}
+                    aria-label={`${social.label} link not set yet`}
+                    title={`${social.label}: add a link in src/data/site.ts`}
                     className="flex size-10 items-center justify-center rounded-full border border-dashed border-line text-muted/50"
                   >
                     <SocialIcon name={social.icon} className="size-[18px]" />

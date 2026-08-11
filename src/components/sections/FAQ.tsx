@@ -12,7 +12,7 @@ export function FAQ() {
           <SectionHeading
             eyebrow="FAQ"
             title="Questions, Answered"
-            subtitle="If something is not covered here, ask us directly — we will give you a straight answer."
+            subtitle="If something is not covered here, ask us directly and we will answer it."
           />
           <ArrowLink href="/contact" className="mt-6 w-fit">
             Ask a question

@@ -75,9 +75,9 @@ export function Hero() {
             </h1>
 
             <p className="t-body max-w-xl text-muted">
-              Sikshya Tech Hub teaches practical, future-ready technology skills to school and
-              college students — and partners with institutions to run courses and workshops on
-              site. Every course is hands-on, and every student finishes something they built.
+              Sikshya Tech Hub teaches technology to school and college students through courses
+              and workshops. Schools and colleges can also work with us to run programmes on their
+              own campus. Every course is hands-on, and students finish with something they built.
             </p>
 
             {/* Stacked and full-width on phones, side by side from `sm` up. */}
@@ -97,7 +97,7 @@ export function Hero() {
               >
                 <Check className="size-3.5" strokeWidth={3} />
               </span>
-              For schools, colleges &amp; curious students — no prior experience needed.
+              For schools, colleges, and curious students. No previous experience is required.
             </p>
           </div>
 

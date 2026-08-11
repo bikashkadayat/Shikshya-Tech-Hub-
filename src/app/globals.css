@@ -80,10 +80,17 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    font-weight: 800;
+    /* 700 is the default; the heaviest weight is reserved for the two levels
+       below, so a page is not uniformly bold from top to bottom. */
+    font-weight: 700;
     line-height: 1.12;
     letter-spacing: -0.02em;
     text-wrap: balance;
+  }
+
+  h1,
+  h2 {
+    font-weight: 800;
   }
 
   p {
@@ -136,12 +143,16 @@
   }
 
   .t-body {
-    font-size: clamp(0.9375rem, 0.91rem + 0.14vw, 1rem);
+    /* 16px @ 320  →  17px @ 1280+. The floor is deliberately 16px: below that
+       phones zoom on focus and long paragraphs get tiring to read. */
+    font-size: clamp(1rem, 0.97rem + 0.16vw, 1.0625rem);
     line-height: 1.7;
   }
 
   .t-small {
-    font-size: 0.875rem;
+    /* 14px @ 320 → 15px @ 1280+, so card roles and captions keep a readable
+       relationship to the body size above them. */
+    font-size: clamp(0.875rem, 0.855rem + 0.1vw, 0.9375rem);
     line-height: 1.6;
   }
 
@@ -149,7 +160,7 @@
   .t-mono {
     font-family: var(--font-mono);
     font-size: 0.75rem;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 600;
     line-height: 1.4;

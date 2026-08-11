@@ -24,7 +24,7 @@ export const workshops: Workshop[] = [
     gradient: 'g-blue',
     duration: null,
     description:
-      'What artificial intelligence really is, where students already meet it every day, and what it can and cannot do — without the hype.',
+      'What artificial intelligence really is, where students already meet it every day, and what it can and cannot do, without the hype.',
     highlights: ['How AI works, in plain language', 'Live demonstrations', 'Using AI honestly'],
   },
   {
@@ -34,7 +34,7 @@ export const workshops: Workshop[] = [
     gradient: 'g-blue',
     duration: null,
     description:
-      'Practical digital safety for students — strong accounts, spotting scams, safe sharing, and what to do when something goes wrong.',
+      'Everyday digital safety for students: strong accounts, spotting scams, safe sharing, and what to do when something goes wrong.',
     highlights: ['Passwords & 2FA', 'Spotting phishing', 'Privacy and footprint'],
   },
   {
@@ -54,7 +54,7 @@ export const workshops: Workshop[] = [
     gradient: 'g-brand',
     duration: null,
     description:
-      'A hands-on first contact with circuits, sensors and motors — students wire something up and make it move.',
+      'A first hands-on session with circuits, sensors and motors, where students wire something up and make it move.',
     highlights: ['Build a live circuit', 'Sensors and motors', 'Team challenge'],
   },
   {
@@ -64,7 +64,7 @@ export const workshops: Workshop[] = [
     gradient: 'g-brand',
     duration: null,
     description:
-      'Planning, shooting and editing content that people actually watch — using the phone already in their pocket.',
+      'Planning, shooting and editing content that people actually watch, using the phone already in their pocket.',
     highlights: ['Shoot on a phone', 'Editing basics', 'Publish a finished piece'],
   },
   {
@@ -84,7 +84,7 @@ export const workshops: Workshop[] = [
     gradient: 'g-green',
     duration: null,
     description:
-      'How brands find an audience online — content, platforms and reading the numbers that matter.',
+      'How brands find an audience online through content, platforms and the numbers that matter.',
     highlights: ['Audience and message', 'Platform basics', 'Reading analytics'],
   },
 ];

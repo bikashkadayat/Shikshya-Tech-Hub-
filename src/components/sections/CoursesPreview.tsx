@@ -12,7 +12,7 @@ export function CoursesPreview() {
         eyebrow="What We Provide"
         align="center"
         title="Courses Built for the Next Generation"
-        subtitle="Nine practical technology courses across AI, development, design, marketing, cybersecurity and robotics — each one project-based from the first session."
+        subtitle="Nine technology courses across AI, development, design, marketing, cybersecurity and robotics. Every one is project-based from the first session."
       />
 
       <CourseGrid courses={courses} className="mt-12" />

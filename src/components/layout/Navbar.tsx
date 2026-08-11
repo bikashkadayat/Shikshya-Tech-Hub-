@@ -53,7 +53,7 @@ export function Navbar() {
         )}
       >
         <Container className="flex h-[72px] items-center justify-between gap-4 lg:h-[78px]">
-          <Link href="/" aria-label={`${siteConfig.name} — home`} className="shrink-0">
+          <Link href="/" aria-label={`${siteConfig.name} home`} className="shrink-0">
             <Logo height={34} />
           </Link>
 
@@ -93,7 +93,16 @@ export function Navbar() {
             {/* `max-sm:hidden` rather than `hidden sm:inline-flex`: Button's own
                 base class sets `inline-flex`, and an unprefixed `hidden` in the
                 same layer does not reliably win against it. */}
-            <Button href="/courses" kind="primary" size="sm" className="max-sm:hidden">
+            {/* `shrink-0` + `whitespace-nowrap`: at exactly 1024px the desktop
+                nav appears and the row is at its tightest, and without these the
+                CTA was the item that gave way — it shrank and broke "Explore
+                Courses" onto two lines inside the pill. */}
+            <Button
+              href="/courses"
+              kind="primary"
+              size="sm"
+              className="max-sm:hidden shrink-0 whitespace-nowrap"
+            >
               Explore Courses
             </Button>
 

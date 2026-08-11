@@ -69,7 +69,7 @@ export default function ContactPage() {
                       </a>
                     ) : (
                       <span
-                        title={`${social.label} — add a link in src/data/site.ts`}
+                        title={`${social.label}: add a link in src/data/site.ts`}
                         className="flex items-center gap-2.5 rounded-full border border-dashed border-line bg-white/60 px-4 py-2.5 text-sm font-semibold text-muted/60"
                       >
                         <SocialIcon name={social.icon} className="size-[18px]" />

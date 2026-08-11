@@ -33,7 +33,7 @@ export default function TutorsPage() {
         title="Meet Our Technology Tutors"
         description={
           hasPlaceholders
-            ? 'Courses are taught by people who work with these technologies directly. Cards marked “editable profile” are placeholders — no invented names, credentials or experience appear on this page.'
+            ? 'Courses are taught by people who work with these technologies directly. Cards marked “editable profile” are placeholders. No invented names, credentials or experience appear on this page.'
             : 'Courses are taught by people who work with these technologies directly. Every name, credential and year of experience on this page was supplied by the tutor it describes.'
         }
         breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Tutors' }]}
@@ -50,7 +50,7 @@ export default function TutorsPage() {
           subtitle={
             hasPlaceholders
               ? `${publishedTutors.length} published profiles, and open slots ready for the tutors who join next.`
-              : `${publishedTutors.length} published profiles — every one of them teaching at Sikshya Tech Hub.`
+              : `${publishedTutors.length} published profiles, every one of them teaching at Sikshya Tech Hub.`
           }
         />
 
@@ -82,7 +82,7 @@ export default function TutorsPage() {
             title={tutor.name}
             subtitle={
               index === 0
-                ? 'Every detail below was supplied by the tutor — nothing has been added beyond it.'
+                ? 'Every detail below was supplied by the tutor. Nothing has been added beyond it.'
                 : undefined
             }
             className="mb-12"
