@@ -19,6 +19,7 @@ export function ProgramFigure({
   sizes,
   priority = false,
   showCaption = true,
+  zoomOnHover = false,
   className,
   figureClassName,
 }: {
@@ -30,6 +31,12 @@ export function ProgramFigure({
   /** Only for an image that is genuinely near the top of its page. */
   priority?: boolean;
   showCaption?: boolean;
+  /**
+   * Adds a slow zoom while the closest `.group` ancestor is hovered or
+   * focus-within. Purely decorative: nothing is revealed by it, and the
+   * site-wide reduced-motion rule flattens the transition to nothing.
+   */
+  zoomOnHover?: boolean;
   className?: string;
   figureClassName?: string;
 }) {
@@ -49,7 +56,12 @@ export function ProgramFigure({
           sizes={sizes}
           priority={priority}
           loading={priority ? undefined : 'lazy'}
-          className="object-cover object-center"
+          className={cn(
+            'object-cover',
+            zoomOnHover &&
+              'transition-transform duration-500 ease-out group-hover:scale-[1.04] group-focus-within:scale-[1.04]',
+          )}
+          style={{ objectPosition: image.imagePosition ?? 'center' }}
         />
       </div>
 

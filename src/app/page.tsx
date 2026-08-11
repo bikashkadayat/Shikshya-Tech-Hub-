@@ -8,6 +8,8 @@ import { LearningInAction } from '@/components/sections/LearningInAction';
 import { HowItWorks } from '@/components/sections/HowItWorks';
 import { TutorsPreview } from '@/components/sections/TutorsPreview';
 import { SchoolsCTA } from '@/components/sections/SchoolsCTA';
+import { CommunityLearning } from '@/components/sections/CommunityLearning';
+import { ProgramHighlights } from '@/components/sections/ProgramHighlights';
 import { Testimonials } from '@/components/sections/Testimonials';
 import { FAQ } from '@/components/sections/FAQ';
 import { ContactSection } from '@/components/sections/ContactSection';
@@ -31,6 +33,8 @@ export default function HomePage() {
       <HowItWorks />
       <TutorsPreview />
       <SchoolsCTA />
+      <CommunityLearning />
+      <ProgramHighlights />
       <Testimonials />
       <FAQ />
       <ContactSection />

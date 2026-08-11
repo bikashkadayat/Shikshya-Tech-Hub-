@@ -22,11 +22,16 @@ export type ProgramImage = {
   caption?: string;
   width: number;
   height: number;
+  /**
+   * CSS `object-position` for the crop, when the frame's aspect ratio differs
+   * from the file's own. Defaults to `center` in `ProgramFigure`.
+   */
+  imagePosition?: string;
   /** Marks the one image intended for prominent, above-the-fold-ish use. */
   featured?: boolean;
 };
 
-/** Every supplied file is 1080 × 720 (3:2). */
+/** The first three supplied files are all 1080 × 720 (3:2). */
 const PHOTO_WIDTH = 1080;
 const PHOTO_HEIGHT = 720;
 
@@ -56,6 +61,42 @@ export const programImages: ProgramImage[] = [
     caption: 'Program activity highlight',
     width: PHOTO_WIDTH,
     height: PHOTO_HEIGHT,
+    featured: false,
+  },
+
+  /* ---------------------------------------------------------------------
+     Later additions. These arrived without any accompanying label, so they
+     are described only by what is visible — no event, institution, date,
+     location or person is named, and none is inferred.
+     --------------------------------------------------------------------- */
+
+  {
+    id: 'community-learning-01',
+    src: '/images/programs/community-learning-01.jpeg',
+    alt: 'Participants working at computers in a classroom with a presentation screen at the front of the room',
+    width: 1080,
+    height: 811,
+    featured: false,
+  },
+  {
+    id: 'program-highlight-01',
+    src: '/images/programs/program-highlight-01.jpeg',
+    alt: 'Participants working at computers in a learning space with a projected presentation',
+    caption: 'Program activity highlight',
+    width: 1080,
+    height: 810,
+    featured: false,
+  },
+  {
+    id: 'program-highlight-02',
+    src: '/images/programs/program-highlight-02.jpeg',
+    alt: 'Participants working at computer workstations during a learning session',
+    caption: 'Program activity highlight',
+    width: 1080,
+    height: 1350,
+    // Taller than the 4:3 highlight frame, so the crop is anchored above
+    // centre to keep the workstations rather than the empty floor.
+    imagePosition: 'center 35%',
     featured: false,
   },
 ];
