@@ -71,11 +71,26 @@ export const programImages: ProgramImage[] = [
      --------------------------------------------------------------------- */
 
   {
-    id: 'community-learning-01',
-    src: '/images/programs/community-learning-01.jpeg',
-    alt: 'Participants working at computers in a classroom with a presentation screen at the front of the room',
+    id: 'hero-practical-learning',
+    src: '/images/programs/hero-practical-learning.jpeg',
+    alt: 'Participants during a practical technology learning activity, working at computers in a classroom with a presentation screen at the front of the room',
+    caption: 'Practical learning in action',
     width: 1080,
     height: 811,
+    // 1080 × 811 is 1.332 : 1 — the home page hero frame is 4:3 (1.333 : 1),
+    // so `cover` trims a single row of pixels and the composition is shown
+    // essentially whole. Centre is correct; no anchor adjustment is needed.
+    featured: true,
+  },
+  {
+    id: 'community-learning-01',
+    src: '/images/programs/community-learning-01.jpeg',
+    alt: 'Participants working side by side at computer workstations during a learning session',
+    width: 867,
+    height: 867,
+    // Square source in a 4:3 frame: anchored above centre so the workstations
+    // and screens stay in frame rather than the floor.
+    imagePosition: 'center 30%',
     featured: false,
   },
   {

@@ -1,45 +1,51 @@
+import Image from 'next/image';
 import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { IconTile } from '@/components/ui/IconTile';
+import { getProgramImage } from '@/data/programGallery';
 import type { IconName } from '@/lib/icons';
 import { cn } from '@/lib/utils';
 
 /**
- * The four labelled cards that float around the device visual.
+ * The four subject badges that sit around the hero photograph.
  *
- * They are anchored to the device's corners and offset outwards, so the only
- * part of the device they ever cover is its own padding — never the title bar,
- * the code, or the chart.
+ * From `sm` up they are anchored just outside the photo's four corners, so
+ * they frame the picture rather than cover it — nothing readable in the
+ * photograph sits under a badge. Below `sm` there is not enough width to float
+ * anything without crowding the picture or pushing past the viewport edge, so
+ * the same four badges reflow into a plain centred row underneath it (see
+ * `sm:contents` on their wrapper). They are rendered once either way: the same
+ * elements simply change how they are laid out.
  */
-const floatingCards: { icon: IconName; label: string; gradient: string; position: string; delay: string }[] = [
+const subjectBadges: { icon: IconName; label: string; gradient: string; position: string; delay: string }[] = [
   {
     icon: 'brain',
     label: 'AI & ML',
     gradient: 'g-blue',
-    position: '-top-8 -left-6 lg:-left-10',
+    position: 'sm:-top-9 sm:-left-4 lg:-left-7',
     delay: '0s',
   },
   {
     icon: 'code',
     label: 'Web Development',
     gradient: 'g-cyan',
-    position: '-top-8 -right-6 lg:-right-10',
+    position: 'sm:-top-9 sm:-right-4 lg:-right-7',
     delay: '1.5s',
   },
   {
     icon: 'shield',
     label: 'Cyber Security',
     gradient: 'g-blue',
-    position: '-bottom-8 -left-6 lg:-left-10',
+    position: 'sm:-bottom-9 sm:-left-4 lg:-left-7',
     delay: '3s',
   },
   {
     icon: 'robot',
     label: 'Robotics',
     gradient: 'g-brand',
-    position: '-bottom-8 -right-6 lg:-right-10',
+    position: 'sm:-bottom-9 sm:-right-4 lg:-right-7',
     delay: '2.2s',
   },
 ];
@@ -95,34 +101,18 @@ export function Hero() {
             </p>
           </div>
 
-          {/* ---------------- Right: device + floating cards ---------------- */}
-          <div className="relative mx-auto w-full max-w-[400px] sm:max-w-[420px]">
-            {/* Orbit dots */}
-            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-              <span className="absolute top-6 right-10 size-2 rounded-full bg-electric/50" />
-              <span className="absolute bottom-16 right-4 size-1.5 rounded-full bg-purple/50" />
-              <span className="absolute top-1/2 left-2 size-1.5 rounded-full bg-cyan/60" />
+          {/* ---------------- Right: photograph + subject badges ---------------- */}
+          <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[520px] lg:max-w-[560px]">
+            {/* Orbit dots — the accents kept from the illustration this panel
+                replaced. Pulled outside the photo's corners so they read as
+                ambient brand detail rather than marks on the picture. */}
+            <div aria-hidden="true" className="pointer-events-none absolute -inset-6 hidden sm:block">
+              <span className="absolute top-10 -right-1 size-2 rounded-full bg-electric/50" />
+              <span className="absolute bottom-20 -left-1 size-1.5 rounded-full bg-purple/50" />
+              <span className="absolute top-1/2 -right-2 size-1.5 rounded-full bg-cyan/60" />
             </div>
 
-            <DeviceCard />
-
-            {/* Floating course chips — hidden below sm so nothing overlaps. */}
-            {floatingCards.map((card) => (
-              <div
-                key={card.label}
-                aria-hidden="true"
-                className={cn(
-                  'animate-float absolute hidden items-center gap-2 rounded-xl border border-white/70 bg-white/90 px-3 py-2 shadow-soft backdrop-blur-sm sm:flex',
-                  card.position,
-                )}
-                style={{ animationDelay: card.delay }}
-              >
-                <IconTile icon={card.icon} gradient={card.gradient} size="sm" className="size-8 rounded-lg" />
-                <span className="text-[12px] font-semibold whitespace-nowrap text-ink">
-                  {card.label}
-                </span>
-              </div>
-            ))}
+            <PracticalLearningCard />
           </div>
         </div>
       </Container>
@@ -131,90 +121,76 @@ export function Hero() {
 }
 
 /**
- * The "shikshya.dev" glass device card — decorative, so it is hidden from
- * assistive technology rather than read out as meaningless code fragments.
+ * The hero's right-hand panel: one real photograph in a glass card.
+ *
+ * This replaces the "shikshya.dev" code-and-chart mock that used to sit here.
+ * The badges around it already carry the technology signal, and layering a
+ * synthetic dashboard behind a real picture of people learning read as clutter
+ * competing with the photograph rather than supporting it. What is kept from
+ * the old panel is its frame — the same glass card, rounding, border and
+ * blue-tinted lift — so the hero's visual identity is unchanged.
+ *
+ * The photograph is the one eagerly-loaded image on the site: it is the only
+ * one reliably above the fold. A fixed 4:3 frame reserves its space before it
+ * arrives, so the hero never shifts while it loads.
+ *
+ * The caption is permanent visible text, not a hover reveal, and it claims
+ * nothing about the event, institution, date, location or people shown. It
+ * sits below the glass card rather than inside it: the two lower badges hang
+ * off the card's bottom corners, and a caption inside the card ran straight
+ * underneath them.
  */
-function DeviceCard() {
-  const codeLines: { text: string; className: string }[][] = [
-    [
-      { text: 'const ', className: 'text-purple' },
-      { text: 'student ', className: 'text-ink' },
-      { text: '= ', className: 'text-muted' },
-      { text: 'new ', className: 'text-purple' },
-      { text: 'Learner', className: 'text-electric' },
-      { text: '()', className: 'text-muted' },
-    ],
-    [
-      { text: 'student', className: 'text-ink' },
-      { text: '.', className: 'text-muted' },
-      { text: 'learn', className: 'text-electric' },
-      { text: '(', className: 'text-muted' },
-      { text: "'ai'", className: 'text-green-dark' },
-      { text: ')', className: 'text-muted' },
-    ],
-    [
-      { text: 'student', className: 'text-ink' },
-      { text: '.', className: 'text-muted' },
-      { text: 'build', className: 'text-electric' },
-      { text: '(', className: 'text-muted' },
-      { text: "'project'", className: 'text-green-dark' },
-      { text: ')', className: 'text-muted' },
-    ],
-    [{ text: '// ready to create', className: 'text-muted/70' }],
-  ];
-
-  const bars = [46, 68, 54, 82, 62, 94];
+function PracticalLearningCard() {
+  const image = getProgramImage('hero-practical-learning');
 
   return (
-    <div
-      aria-hidden="true"
-      className="relative rounded-3xl border border-white/70 bg-white/80 p-5 shadow-softlg backdrop-blur-md sm:p-6"
-    >
-      {/* Title bar */}
-      <div className="flex items-center gap-3 border-b border-line pb-3">
-        <span className="flex gap-1.5">
-          <span className="size-2.5 rounded-full bg-[#FF6058]" />
-          <span className="size-2.5 rounded-full bg-yellow" />
-          <span className="size-2.5 rounded-full bg-green" />
-        </span>
-        <span className="font-mono text-[12px] tracking-wide text-muted">shikshya.dev</span>
-      </div>
-
-      {/* Code.
-          `whitespace-pre` matters here: as flex children the spans would have
-          their leading/trailing spaces collapsed and the code would run together. */}
-      <div className="flex flex-col gap-2 overflow-hidden pt-4 font-mono text-[12px] leading-relaxed sm:text-[13px]">
-        {codeLines.map((parts, index) => (
-          <p key={index} className="whitespace-pre">
-            <span className="mr-3 inline-block w-4 text-right text-muted/40 select-none">
-              {index + 1}
-            </span>
-            {parts.map((part, partIndex) => (
-              <span key={partIndex} className={part.className}>
-                {part.text}
-              </span>
-            ))}
-          </p>
-        ))}
-      </div>
-
-      {/* Mini bar chart */}
-      <div className="mt-5 rounded-2xl bg-mist p-4">
-        <div className="flex items-center justify-between">
-          <span className="t-mono text-muted">Skill growth</span>
-          <span className="t-mono text-electric">Project-based</span>
+    <figure className="flex flex-col gap-3 sm:gap-11">
+      {/* The glass card is the badges' positioning context, so they anchor to
+          the picture's own corners at every width instead of drifting with the
+          caption underneath. */}
+      <div className="group relative rounded-3xl border border-white/70 bg-white/80 p-3 shadow-softlg backdrop-blur-md transition-shadow duration-300 hover:shadow-lift sm:p-4">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-line/70 bg-mist2">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            priority
+            sizes="(min-width: 1024px) 560px, (min-width: 640px) 520px, 92vw"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            style={{ objectPosition: image.imagePosition ?? 'center' }}
+          />
         </div>
 
-        <div className="mt-3 flex h-20 items-end gap-2">
-          {bars.map((height, index) => (
+        {/* One set of badges. Floating just outside the card's four corners
+            from `sm` up — clear of the picture itself — and a plain centred row
+            underneath it on phones, where floating anything would either crowd
+            the picture or reach past the viewport edge. */}
+        <div className="mt-4 flex flex-wrap justify-center gap-2 sm:contents">
+          {subjectBadges.map((badge) => (
             <span
-              key={index}
-              className="g-blue flex-1 rounded-t-md"
-              style={{ height: `${height}%`, opacity: 0.45 + index * 0.09 }}
-            />
+              key={badge.label}
+              className={cn(
+                'flex items-center gap-2 rounded-xl border border-white/70 bg-white/90 px-2.5 py-1.5 shadow-soft backdrop-blur-sm',
+                'sm:animate-float sm:absolute sm:px-3 sm:py-2',
+                badge.position,
+              )}
+              style={{ animationDelay: badge.delay }}
+            >
+              <IconTile
+                icon={badge.icon}
+                gradient={badge.gradient}
+                size="sm"
+                className="size-7 rounded-lg sm:size-8"
+              />
+              <span className="text-[12px] font-semibold whitespace-nowrap text-ink">
+                {badge.label}
+              </span>
+            </span>
           ))}
         </div>
       </div>
-    </div>
+
+      <figcaption className="t-small px-1 text-center text-muted">{image.caption}</figcaption>
+    </figure>
   );
 }
